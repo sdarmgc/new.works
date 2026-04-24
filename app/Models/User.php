@@ -66,4 +66,42 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
+
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Convenience Accessors (optional but VERY useful)
+    |--------------------------------------------------------------------------
+    */
+
+    public function getFirstNameAttribute()
+    {
+        return $this->profile?->first_name;
+    }
+
+    public function getLastNameAttribute()
+    {
+        return $this->profile?->last_name;
+    }
+
+    public function getFullNameAttribute()
+    {
+        if ($this->profile) {
+            return trim($this->profile->first_name . ' ' . $this->profile->last_name);
+        }
+
+        return $this->name;
+    }
+
 }
