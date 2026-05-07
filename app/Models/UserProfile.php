@@ -11,17 +11,17 @@ class UserProfile extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id' => $user->id,
-        'gender' => (trim($user->title) == 'Sis.') ? false : true,
-        'first_name' => $user->first_name,
-        'last_name'  => $user->last_name,
-        'phone' => $user->phone,
-        'phone_app' => $user->phone_app,
-        'extra' => $user->extra,
-        'notify' => $user->notify,
-        'active' => $user->active,
-        'last_login_at' => $user->last_login_at,
-        'last_login_ip' => $user->last_login_ip,
+        'user_id',
+        'gender',
+        'first_name',
+        'last_name',
+        'phone',
+        'phone_app',
+        'extra',
+        'notify',
+        'active',
+        'last_login_at',
+        'last_login_ip',
         'deleted_at',
     ];
 
