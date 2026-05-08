@@ -24,6 +24,8 @@ class UserForm
         // $components[] = Components\Password::make();
         // $components[] = Components\PasswordConfirmation::make();
         $components[] = Components\Roles::make();
+        $components[] = Components\Languages::make();
+        $components[] = Components\Countries::make();
 
         return $components;
     }

@@ -27,6 +27,8 @@ class UsersTable
             Columns\Name::make(),
             Columns\Email::make(),
             Columns\Roles::make(),
+            Columns\Languages::make(),
+            Columns\Countries::make(),
             Columns\Verified::make(),
             Columns\CreatedAt::make(),
             Columns\UpdatedAt::make(),

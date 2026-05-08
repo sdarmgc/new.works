@@ -20,6 +20,8 @@ class UserFilters
     {
         return [
             Filters\Verified::make(),
+            Filters\Languages::make(),
+            Filters\Countries::make(),
             Filters\Roles::make(),
         ];
     }

@@ -24,6 +24,8 @@ class UserInfolist
         $components[] = Entries\Email::make();
         $components[] = Entries\Verified::make();
         $components[] = Entries\Roles::make();
+        $components[] = Entries\Languages::make();
+        $components[] = Entries\Countries::make();
 
         return $components;
     }

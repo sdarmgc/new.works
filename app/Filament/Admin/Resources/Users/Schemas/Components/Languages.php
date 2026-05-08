@@ -18,7 +18,7 @@ class Languages extends Component
             ->columnSpanFull()
             ->multiple()
             ->preload()
-            ->relationship('languages', 'language_name')
+            ->relationship('languages', 'name')
             ->label(trans('Language'));
     }
 }

@@ -16,6 +16,6 @@ class Roles extends Entry
             ->badge()
             ->icon('heroicon-o-shield-check')
             ->color('success')
-            ->label(trans('roles'));
+            ->label(trans('Roles'));
     }
 }

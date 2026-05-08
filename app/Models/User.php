@@ -14,7 +14,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasRoles;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
-use UserProfile;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+// use App\Models\UserProfile;
+// use App\Models\Language;
+// use App\Models\Country;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -81,9 +85,19 @@ class User extends Authenticatable implements FilamentUser
     |--------------------------------------------------------------------------
     */
 
-    public function profile()
+    public function profile(): HasOne
     {
         return $this->hasOne(UserProfile::class);
+    }
+
+    public function languages(): BelongsToMany
+    {
+        return $this->BelongsToMany(Language::class, 'user_language');
+    }
+
+    public function countries(): BelongsToMany
+    {
+        return $this->BelongsToMany(Country::class, 'user_country');
     }
 
     /*
@@ -115,6 +129,10 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool
     {
         // Only users with the 'admin' role or specific permission can enter the panel
-        return $this->hasRole('administrator') || $this->can('access_admin');
+        if ($panel->getId() === 'admin') {
+            return $this->hasRole('administrator') || $this->can('access_admin');
+        }
+        else
+            return true;
     }
 }

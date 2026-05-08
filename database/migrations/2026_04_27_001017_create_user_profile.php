@@ -13,7 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->softDeletes(); // Adds the deleted_at column
+        });
+
         Schema::create('user_profiles', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id')->unique();
             $table->boolean('gender')->default(1)->comment('true="Br.", false="Sis."');
             $table->string('first_name')->nullable();
@@ -25,7 +30,6 @@ return new class extends Migration
             $table->tinyInteger('active')->default(0)->unsigned();
             $table->timestamp('last_login_at')->nullable();
             $table->string('last_login_ip')->nullable();
-            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
 
@@ -43,6 +47,7 @@ return new class extends Migration
                     'password' => $user->password,
                     'created_at' => $user->created_at,
                     'updated_at' => $user->updated_at,
+                    'deleted_at' => $user->deleted_at,
                 ];
                 $profiles[] = [
                     'user_id' => $user->id,
@@ -56,7 +61,6 @@ return new class extends Migration
                     'active' => $user->active,
                     'last_login_at' => $user->last_login_at,
                     'last_login_ip' => $user->last_login_ip,
-                    'deleted_at' => $user->deleted_at,
                 ];
                 $langs = explode(',', trim($user->language));
                 foreach ($langs as $lang) {
@@ -84,5 +88,8 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('user_profile');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropSoftDeletes(); // Removes the column if rolled back
+        });
     }
 };

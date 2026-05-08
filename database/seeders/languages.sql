@@ -2,7 +2,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-INSERT INTO `languages` (`id`, `family`, `language_name`, `native_name`, `iso_639_1`, `iso_639_2t`, `iso_639_2b`, `iso_639_3`, `iso_639_6`, `note`, `created_at`, `updated_at`) VALUES
+INSERT INTO `languages` (`id`, `family`, `name`, `native_name`, `iso_639_1`, `iso_639_2t`, `iso_639_2b`, `iso_639_3`, `iso_639_6`, `note`, `created_at`, `updated_at`) VALUES
 (1, 'Northwest Caucasian', 'Abkhaz', 'аҧсуа бызшәа, аҧсшәа', 'ab', 'abk', 'abk', 'abk', 'abks', 'abks', '2026-04-09 08:06:59', NULL),
 (2, 'Afro-Asiatic', 'Afar', 'Afaraf', 'aa', 'aar', 'aar', 'aar', 'aars', 'aars', '2026-04-09 08:06:59', NULL),
 (3, 'Indo-European', 'Afrikaans', 'Afrikaans', 'af', 'afr', 'afr', 'afr', 'afrs', 'afrs', '2026-04-09 08:06:59', NULL),

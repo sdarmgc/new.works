@@ -6,15 +6,15 @@ namespace App\Filament\Admin\Resources\Users\Tables\Filters;
 
 use Filament\Tables;
 
-class Roles extends Filter
+class Languages extends Filter
 {
     public static function make(): Tables\Filters\SelectFilter
     {
-        return Tables\Filters\SelectFilter::make('roles')
-            ->label(trans('Roles'))
+        return Tables\Filters\SelectFilter::make('languages')
+            ->label(trans('Languages'))
             ->multiple()
             ->searchable()
             ->preload()
-            ->relationship('roles', 'name');
+            ->relationship('languages', 'name');
     }
 }

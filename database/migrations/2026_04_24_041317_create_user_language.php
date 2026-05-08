@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('user_language', function (Blueprint $table) {
             $table->foreignId('user_id')->index();
-            $table->foreignId('lang_id');
+            $table->foreignId('language_id');
         });
         Schema::create('user_country', function (Blueprint $table) {
             $table->foreignId('user_id')->index();

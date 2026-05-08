@@ -16,6 +16,6 @@ class Roles extends Column
             ->color('success')
             ->toggleable()
             ->badge()
-            ->label(trans('roles'));
+            ->label(trans('Roles'));
     }
 }

@@ -16,10 +16,10 @@ class RolesAction extends Action
             ->icon('heroicon-o-shield-check')
             ->color('success')
             ->requiresConfirmation()
-            ->label(trans('roles'))
+            ->label(trans('Roles'))
             ->schema([
                 Forms\Components\Select::make('roles')
-                    ->label(trans('roles'))
+                    ->label(trans('Roles'))
                     ->multiple()
                     ->searchable()
                     ->preload()

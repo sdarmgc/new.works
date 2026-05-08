@@ -6,15 +6,14 @@ namespace App\Filament\Admin\Resources\Users\Tables\Columns;
 
 use Filament\Tables;
 
-class Languages extends Column
+class Countries extends Column
 {
     public static function make(): Tables\Columns\TextColumn
     {
-        return Tables\Columns\TextColumn::make('languages.name')
+        return Tables\Columns\TextColumn::make('countries.name')
             ->formatStateUsing(static fn ($state) => str($state)->replace('_', ' ')->replace('-', ' ')->title())
             ->color('primary')
-            ->wrap()
             ->toggleable()
-            ->label(trans('Languages'));
+            ->label(trans('Countries'));
     }
 }
