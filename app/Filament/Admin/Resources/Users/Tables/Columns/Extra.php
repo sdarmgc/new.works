@@ -6,13 +6,14 @@ namespace App\Filament\Admin\Resources\Users\Tables\Columns;
 
 use Filament\Tables;
 
-class Name extends Column
+class Extra extends Column
 {
     public static function make(): Tables\Columns\TextColumn
     {
-        return Tables\Columns\TextColumn::make('name')
-            ->sortable()
+        return Tables\Columns\TextColumn::make('profile.extra')
+            ->toggleable(isToggledHiddenByDefault: true)
             ->searchable()
-            ->label(trans('Nickname'));
+            ->label(trans('Extra'))
+            ;
     }
 }

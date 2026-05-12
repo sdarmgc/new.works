@@ -6,11 +6,11 @@ namespace App\Filament\Admin\Resources\Users\Schemas\Entries;
 
 use Filament\Infolists;
 
-class Name extends Entry
+class LastLoginIP extends Entry
 {
     public static function make(): Infolists\Components\TextEntry
     {
-        return Infolists\Components\TextEntry::make('name')
-            ->label(trans('Nickname'));
+        return Infolists\Components\TextEntry::make('profile.last_login_ip')
+            ->label(trans('Last Login IP'));
     }
 }

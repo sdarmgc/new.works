@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\Users\Schemas;
 
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Field;
 use Filament\Schemas\Schema;
 
@@ -23,6 +24,28 @@ class UserForm
         $components[] = Components\Email::make();
         // $components[] = Components\Password::make();
         // $components[] = Components\PasswordConfirmation::make();
+
+        // user_profile
+        $components[] = Section::make('Profile')
+                ->relationship('profile')
+                ->columns([
+                    'sm' => 1,
+                    'xl' => 2,
+                    '2xl' => 4,
+                ])
+                ->schema([
+                    Components\Active::make(),
+                    Components\Gender::make(),
+                    Components\FirstName::make(),
+                    Components\LastName::make(),
+                    Components\Phone::make(),
+                    Components\PhoneApp::make(),
+                    Components\Notify::make(),
+                    Components\Extra::make(),
+                ])
+                ->columnSpanFull()
+                ;
+
         $components[] = Components\Roles::make();
         $components[] = Components\Languages::make();
         $components[] = Components\Countries::make();

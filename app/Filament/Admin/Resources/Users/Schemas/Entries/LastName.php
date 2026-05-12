@@ -6,11 +6,11 @@ namespace App\Filament\Admin\Resources\Users\Schemas\Entries;
 
 use Filament\Infolists;
 
-class Name extends Entry
+class LastName extends Entry
 {
     public static function make(): Infolists\Components\TextEntry
     {
-        return Infolists\Components\TextEntry::make('name')
-            ->label(trans('Nickname'));
+        return Infolists\Components\TextEntry::make('profile.last_name')
+            ->label(trans('LastName Name'));
     }
 }

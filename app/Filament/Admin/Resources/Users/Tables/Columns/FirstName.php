@@ -6,14 +6,15 @@ namespace App\Filament\Admin\Resources\Users\Tables\Columns;
 
 use Filament\Tables;
 
-class Languages extends Column
+class FirstName extends Column
 {
     public static function make(): Tables\Columns\TextColumn
     {
-        return Tables\Columns\TextColumn::make('languages.name')
-            ->color('primary')
-            ->wrap()
+        return Tables\Columns\TextColumn::make('profile.first_name')
+            ->sortable()
             ->toggleable()
-            ->label(trans('Languages'));
+            ->searchable()
+            ->label(trans('First Name'))
+            ;
     }
 }

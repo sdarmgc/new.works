@@ -6,6 +6,8 @@ namespace App\Filament\Admin\Resources\Users\Tables;
 
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Table;
+use Filament\Tables\Enums\FiltersLayout;
+
 
 class UsersTable
 {
@@ -15,9 +17,13 @@ class UsersTable
     {
         return $table
             ->columns(static::getColumns())
-            ->filters(config('filament-users.resource.table.filters')::make())
+            ->filters(config('filament-users.resource.table.filters')::make(),
+                layout: FiltersLayout::AboveContent)
             ->recordActions(config('filament-users.resource.table.actions')::make())
-            ->toolbarActions(config('filament-users.resource.table.bulkActions')::make());
+            ->toolbarActions(config('filament-users.resource.table.bulkActions')::make())
+            ->persistFiltersInSession()
+            ->deferFilters(false)   // enable filter live
+            ;
     }
 
     public static function getDefaultColumns(): array
@@ -29,6 +35,19 @@ class UsersTable
             Columns\Roles::make(),
             Columns\Languages::make(),
             Columns\Countries::make(),
+
+            // user profile
+            Columns\Gender::make(),
+            Columns\FirstName::make(),
+            Columns\LastName::make(),
+            Columns\Phone::make(),
+            Columns\PhoneApp::make(),
+            Columns\Extra::make(),
+            Columns\Notify::make(),
+            // Columns\Active::make(),
+            Columns\LastLoginAt::make(),
+            Columns\LastLoginIP::make(),
+
             Columns\Verified::make(),
             Columns\CreatedAt::make(),
             Columns\UpdatedAt::make(),

@@ -19,10 +19,15 @@ class UserFilters
     private static function getDefaultFilters(): array
     {
         return [
-            Filters\Verified::make(),
+            // Filters\Verified::make(),
             Filters\Languages::make(),
             Filters\Countries::make(),
             Filters\Roles::make(),
+
+            // user profile
+            // Filters\Title::make(),
+            Filters\FullName::make(),
+            Filters\Notify::make(),
         ];
     }
 

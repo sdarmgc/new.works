@@ -13,7 +13,12 @@ class UserInfolist
 
     public static function configure(Schema $schema): Schema
     {
-        return $schema->components(static::getSchema());
+        return $schema->components(static::getSchema())
+                ->columns([
+                    'sm' => 1,
+                    'xl' => 2,
+                    '2xl' => 4,
+                ]);
     }
 
     public static function getDefaultComponents(): array
@@ -23,10 +28,22 @@ class UserInfolist
         $components[] = Entries\Name::make();
         $components[] = Entries\Email::make();
         $components[] = Entries\Verified::make();
+
+        // user_profile
+        $components[] = Entries\Gender::make();
+        $components[] = Entries\FirstName::make();
+        $components[] = Entries\LastName::make();
+        $components[] = Entries\Phone::make();
+        $components[] = Entries\PhoneApp::make();
+        $components[] = Entries\Extra::make();
+        $components[] = Entries\Active::make();
+        $components[] = Entries\Notify::make();
+        $components[] = Entries\LastLoginAt::make();
+        $components[] = Entries\LastLoginIP::make();
+        
         $components[] = Entries\Roles::make();
         $components[] = Entries\Languages::make();
         $components[] = Entries\Countries::make();
-
         return $components;
     }
 

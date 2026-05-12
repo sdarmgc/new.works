@@ -19,8 +19,8 @@ return new class extends Migration
 
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->unique();
-            $table->boolean('gender')->default(1)->comment('true="Br.", false="Sis."');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->integer('gender')->default(0)->comment('1="Br.", 2="Sis."');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('phone', 20)->nullable();
@@ -51,7 +51,7 @@ return new class extends Migration
                 ];
                 $profiles[] = [
                     'user_id' => $user->id,
-                    'gender' => (trim($user->title) == 'Sis.') ? false : true,
+                    'gender' => (trim($user->title) == 'Sis.') ? 2 : 1,
                     'first_name' => $user->first_name,
                     'last_name'  => $user->last_name,
                     'phone' => $user->phone,
