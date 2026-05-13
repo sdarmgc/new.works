@@ -52,7 +52,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model): bool
     {
-        return false;
+        return $user->hasRole('super-admin') || $user->hasRole('administrator');
     }
 
     /**
@@ -60,6 +60,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model): bool
     {
-        return $user->hasRole('super-admin');
+        return $user->hasRole('super-admin') || $user->hasRole('administrator');
     }
 }

@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\Users\Tables;
 
+use Filament\Actions;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
+
 class UserActions
 {
     /**
@@ -22,7 +26,12 @@ class UserActions
             Actions\ViewAction::make(),
             Actions\EditAction::make(),
             // Actions\ChangePassword::make(),
-            // Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()
+                ->visible(fn ($record): bool => !$record->trashed()),
+            ForceDeleteAction::make()
+                ->visible(fn ($record): bool => $record->trashed()),
+            RestoreAction::make()
+                ->visible(fn ($record): bool => $record->trashed()),
         ];
     }
 
