@@ -19,7 +19,7 @@ return new class extends Migration
 
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id');
             $table->integer('gender')->default(0)->comment('1="Br.", 2="Sis."');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
@@ -44,6 +44,7 @@ return new class extends Migration
                     'id' => $user->id,
                     'name' => $user->first_name . ' ' . $user->last_name,
                     'email' => $user->email,
+                    'email_verified_at' => time(),
                     'password' => $user->password,
                     'created_at' => $user->created_at,
                     'updated_at' => $user->updated_at,

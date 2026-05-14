@@ -4,37 +4,44 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9325b653e8d820e21bc9e69f0dea1dc",
+    "content-hash": "bfa7dce07a676d67d6efb829128adc5d",
     "packages": [
         {
-            "name": "arcanedev/no-captcha",
-            "version": "2.1.0",
+            "name": "anhskohbo/no-captcha",
+            "version": "3.8.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ARCANEDEV/noCAPTCHA.git",
-                "reference": "75e5473785d3dda536fe1fefcf803959dc11733c"
+                "url": "https://github.com/anhskohbo/no-captcha.git",
+                "reference": "43dd871ac4e6993ffc51d81701c73fdbfa098bb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ARCANEDEV/noCAPTCHA/zipball/75e5473785d3dda536fe1fefcf803959dc11733c",
-                "reference": "75e5473785d3dda536fe1fefcf803959dc11733c",
+                "url": "https://api.github.com/repos/anhskohbo/no-captcha/zipball/43dd871ac4e6993ffc51d81701c73fdbfa098bb7",
+                "reference": "43dd871ac4e6993ffc51d81701c73fdbfa098bb7",
                 "shasum": ""
             },
             "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "php": ">=5.5.9"
+                "guzzlehttp/guzzle": "^6.2|^7.0",
+                "illuminate/support": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "php": ">=5.5.5"
             },
             "require-dev": {
-                "illuminate/html": "~5.0",
-                "mockery/mockery": "~0.9",
-                "orchestra/testbench": "~3.1",
-                "phpunit/phpcov": "~2.0"
+                "phpunit/phpunit": "~4.8|^9.5.10|^10.5"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "NoCaptcha": "Anhskohbo\\NoCaptcha\\Facades\\NoCaptcha"
+                    },
+                    "providers": [
+                        "Anhskohbo\\NoCaptcha\\NoCaptchaServiceProvider"
+                    ]
+                }
+            },
             "autoload": {
                 "psr-4": {
-                    "Arcanedev\\NoCaptcha\\": "src/"
+                    "Anhskohbo\\NoCaptcha\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -43,23 +50,25 @@
             ],
             "authors": [
                 {
-                    "name": "ARCANEDEV",
-                    "email": "arcanedev.maroc@gmail.com"
+                    "name": "anhskohbo",
+                    "email": "anhskohbo@gmail.com"
                 }
             ],
-            "description": "No CAPTCHA (new Google reCAPTCHA) with Laravel support",
+            "description": "No CAPTCHA reCAPTCHA For Laravel.",
             "keywords": [
                 "captcha",
-                "google",
                 "laravel",
+                "laravel4",
+                "laravel5",
+                "laravel6",
                 "no-captcha",
                 "recaptcha"
             ],
             "support": {
-                "issues": "https://github.com/ARCANEDEV/noCAPTCHA/issues",
-                "source": "https://github.com/ARCANEDEV/noCAPTCHA/tree/master"
+                "issues": "https://github.com/anhskohbo/no-captcha/issues",
+                "source": "https://github.com/anhskohbo/no-captcha/tree/3.8.0"
             },
-            "time": "2015-07-23T12:07:08+00:00"
+            "time": "2026-02-23T15:53:24+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
