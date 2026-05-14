@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Resources\Users\Tables\Columns;
 
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class Countries extends Column
 {
@@ -14,6 +16,11 @@ class Countries extends Column
             ->formatStateUsing(static fn ($state) => str($state)->replace('_', ' ')->replace('-', ' ')->title())
             ->color('primary')
             ->toggleable()
-            ->label(trans('Countries'));
+            ->sortable(query: function (Builder $query, string $direction): Builder {
+                return $query
+                    ->withAggregate('countries', 'name')
+                    ->orderBy('countries_name', $direction);
+            })
+            ->label(trans('Country'));
     }
 }

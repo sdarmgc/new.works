@@ -14,6 +14,6 @@ class Countries extends Entry
             ->visible(static fn ($record) => $record->countries->isNotEmpty())
             ->columnSpanFull()
             ->color('primary')
-            ->label(trans('Countries'));
+            ->label(trans('Country'));
     }
 }

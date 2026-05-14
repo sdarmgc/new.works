@@ -16,9 +16,9 @@ class Countries extends Component
     {
         return Forms\Components\Select::make('countries')
             ->columnSpanFull()
-            ->multiple()
+            // ->multiple()
             ->preload()
             ->relationship('countries', 'name')
-            ->label(trans('Countries'));
+            ->label(trans('Country'));
     }
 }

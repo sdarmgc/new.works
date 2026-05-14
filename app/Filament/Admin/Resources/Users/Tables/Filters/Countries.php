@@ -11,7 +11,7 @@ class Countries extends Filter
     public static function make(): Tables\Filters\SelectFilter
     {
         return Tables\Filters\SelectFilter::make('countries')
-            ->label(trans('Countries'))
+            ->label(trans('Country'))
             ->multiple()
             ->searchable()
             ->preload()
