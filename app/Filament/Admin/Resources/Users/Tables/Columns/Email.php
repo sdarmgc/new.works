@@ -10,7 +10,9 @@ class Email extends Column
 {
     public static function make(): Tables\Columns\TextColumn
     {
-        return config('filament-users.styled_columns')
+        $styled_columns = false;
+        
+        return $styled_columns
             ? Tables\Columns\TextColumn::make('email')
                 ->icon('heroicon-o-envelope')
                 ->color('primary')

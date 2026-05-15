@@ -23,7 +23,7 @@ class RolesAction extends Action
                     ->multiple()
                     ->searchable()
                     ->preload()
-                    ->options(config('filament-users.roles_model')::query()->pluck('name', 'id')->toArray()),
+                    ->options(\Spatie\Permission\Models\Role::class::query()->pluck('name', 'id')->toArray()),
             ])
             ->action(static function (array $data, Collection $records, Actions\BulkAction $action) {
                 $roles = $data['roles'];

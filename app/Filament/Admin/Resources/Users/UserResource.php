@@ -26,12 +26,12 @@ class UserResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('filament-users.navigation_sort') ?? 9;
+        return 9;
     }
 
     public static function getNavigationIcon(): string
     {
-        return config('filament-users.navigation_icon') ?? Heroicon::OutlinedUser;
+        return 'heroicon-o-user' ?? Heroicon::OutlinedUser;
     }
 
     public static function getPluralLabel(): string
@@ -46,11 +46,7 @@ class UserResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        if (config('filament-users.shield')) {
-            return __('filament-shield::filament-shield.nav.group');
-        }
-
-        return config('filament-users.group') ?? trans('filament-users::user.group');
+        return trans('Manage User');
     }
 
     public function getTitle(): string
@@ -60,17 +56,17 @@ class UserResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return config('filament-users.resource.form.class')::configure($schema);
+        return Schemas\UserForm::class::configure($schema);
     }
 
     public static function infolist(Schema $schema): Schema
     {
-        return config('filament-users.resource.infolist.class')::configure($schema);
+        return Schemas\UserInfolist::class::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return config('filament-users.resource.table.class')::configure($table);
+        return Tables\UsersTable::class::configure($table);
     }
 
     public static function getRelations(): array
@@ -84,8 +80,9 @@ class UserResource extends Resource
 
     public static function getPages(): array
     {
+        $isSimple = false;
         return
-            config('filament-users.simple')
+            $isSimple
                 ? [
                     'index' => Pages\ManageUsers::route('/'),
                 ] : [

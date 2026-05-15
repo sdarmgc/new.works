@@ -17,10 +17,10 @@ class UsersTable
     {
         return $table
             ->columns(static::getColumns())
-            ->filters(config('filament-users.resource.table.filters')::make(),
+            ->filters(UserFilters::class::make(),
                 layout: FiltersLayout::AboveContent)
-            ->recordActions(config('filament-users.resource.table.actions')::make())
-            ->toolbarActions(config('filament-users.resource.table.bulkActions')::make())
+            ->recordActions(UserActions::class::make())
+            ->toolbarActions(UserBulkActions::class::make())
             ->persistFiltersInSession()
             ->deferFilters(false)   // enable filter live
             ;

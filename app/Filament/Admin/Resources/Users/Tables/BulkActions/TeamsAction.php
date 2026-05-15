@@ -23,7 +23,7 @@ class TeamsAction extends Action
                     ->multiple()
                     ->searchable()
                     ->preload()
-                    ->options(config('filament-users.team_model')::query()->pluck('name', 'id')->toArray()),
+                    ->options(\App\Models\Team::class::query()->pluck('name', 'id')->toArray()),
             ])
             ->action(static function (array $data, Collection $records, Actions\BulkAction $action) {
                 $teams = $data['teams'];
