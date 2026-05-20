@@ -16,6 +16,6 @@ class Roles extends Entry
             ->badge()
             ->icon('heroicon-o-shield-check')
             ->color('success')
-            ->label(trans('Roles'));
+            ->label(trans('labels.backend.access.users.table.roles'));
     }
 }

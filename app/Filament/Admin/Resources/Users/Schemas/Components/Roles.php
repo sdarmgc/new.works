@@ -19,6 +19,6 @@ class Roles extends Component
             ->multiple()
             ->preload()
             ->relationship('roles', 'name')
-            ->label(trans('Roles'));
+            ->label(trans('labels.backend.access.users.table.roles'));
     }
 }

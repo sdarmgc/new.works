@@ -102,6 +102,16 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
+                            <x-dropdown-link href="{{ route('contact') }}">
+                                {{ __('Contact') }}
+                            </x-dropdown-link>
+
+                            @hasanyrole('super-admin|administrator|executive')
+                                <x-dropdown-link href="{{ url('/admin') }}">
+                                    {{ __('Admin Dashboard') }}
+                                </x-dropdown-link>
+                            @endhasanyrole
+
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-dropdown-link href="{{ route('api-tokens.index') }}">
                                     {{ __('API Tokens') }}

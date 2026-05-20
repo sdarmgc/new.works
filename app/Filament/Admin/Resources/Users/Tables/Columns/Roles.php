@@ -16,6 +16,6 @@ class Roles extends Column
             ->color('success')
             ->toggleable()
             ->badge()
-            ->label(trans('Roles'));
+            ->label(trans('labels.backend.access.users.table.roles'));
     }
 }

@@ -11,7 +11,7 @@ class Roles extends Filter
     public static function make(): Tables\Filters\SelectFilter
     {
         return Tables\Filters\SelectFilter::make('roles')
-            ->label(trans('Roles'))
+            ->label(trans('labels.backend.access.users.table.roles'))
             ->multiple()
             ->searchable()
             ->preload()
