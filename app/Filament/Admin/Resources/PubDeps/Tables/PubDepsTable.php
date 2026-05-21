@@ -26,20 +26,22 @@ class PubDepsTable
                 Columns\LastName::make(),
                 Columns\Phone::make(),
                 Columns\PhoneApp::make(),
-                Columns\Notify::make(),
+                // Columns\Notify::make(),
                 Columns\LastLoginAt::make(),
                 Columns\LastLoginIP::make(),
 
                 Columns\Languages::make(),
                 Columns\Countries::make(),
+                Columns\MailGroups::make(),
             ])
             ->filters([
                 // TrashedFilter::make(),
                 
                 Filters\Languages::make(),
                 Filters\Countries::make(),
+                Filters\MailGroups::make(),
                 Filters\FullName::make(),
-                Filters\Notify::make(),
+                // Filters\Notify::make(),
             ], layout: FiltersLayout::AboveContent)
             ->recordActions([
                 // ViewAction::make(),

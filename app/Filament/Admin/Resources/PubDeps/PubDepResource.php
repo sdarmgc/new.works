@@ -70,7 +70,7 @@ class PubDepResource extends Resource
 
     public static function getPages(): array
     {
-        $isSimple = false;
+        $isSimple = true;
         return
             $isSimple
                 ? [

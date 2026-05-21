@@ -49,6 +49,7 @@ class UserForm
         $components[] = Components\Roles::make();
         $components[] = Components\Languages::make();
         $components[] = Components\Countries::make();
+        $components[] = Components\MailGroups::make();
 
         return $components;
     }

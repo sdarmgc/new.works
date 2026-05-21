@@ -80,6 +80,19 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         ];
     }
 
+    protected static function booted()
+    {
+        static::deleting(function ($user) {
+            if ($user->isForceDeleting()) {
+                $user->roles()?->detach();
+                $user->languages()?->detach();
+                $user->countries()?->detach();
+                $user->mailGroups()?->detach();
+
+                $user->profile()?->delete();
+            }
+        });
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -101,6 +114,11 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     public function countries(): BelongsToMany
     {
         return $this->BelongsToMany(Country::class, 'user_country');
+    }
+
+    public function mailGroups(): BelongsToMany
+    {
+        return $this->BelongsToMany(MailGroup::class, 'user_mail_group');
     }
 
     /*
@@ -133,7 +151,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     {
         // Only users with the 'admin' role or specific permission can enter the panel
         if ($panel->getId() === 'admin') {
-            return $this->hasRole('administrator') || $this->can('access_admin');
+            return $this->hasRole(['administrator', 'executive']) || $this->can('access_admin');
         }
         else
             return true;

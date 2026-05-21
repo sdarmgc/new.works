@@ -35,6 +35,7 @@ class UsersTable
             Columns\Roles::make(),
             Columns\Languages::make(),
             Columns\Countries::make(),
+            Columns\MailGroups::make(),
 
             // user profile
             Columns\Gender::make(),
