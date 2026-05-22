@@ -7,15 +7,16 @@ namespace App\Filament\Admin\Resources\Users\Schemas\Components;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 
-class PhoneApp extends Component
+class Responsibility extends Component
 {
     /**
      * @return TextInput
      */
     public static function make(): Forms\Components\TextInput
     {
-        return Forms\Components\TextInput::make('phone_app')
-            ->label(trans('Phone'))
+        return Forms\Components\TextInput::make('responsibility')
+            ->columnSpanFull()
+            ->label(trans('Responsibility'))
             ;
     }
 }

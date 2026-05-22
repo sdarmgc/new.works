@@ -34,7 +34,7 @@ class UserProfilesRelationManager extends RelationManager
                 TextInput::make('first_name')->required()->maxLength(255)->label(trans('First Name')),
                 TextInput::make('last_name')->required()->maxLength(255)->label(trans('Last Name')),
                 TextInput::make('phone')->maxLength(255)->label(trans('Phone')),
-                TextInput::make('phone_app')->maxLength(255)->label(trans('phone_app')),
+                TextInput::make('responsibility')->maxLength(255)->label(trans('Responsibility')),
                 TextArea::make('extra')->maxLength(1023)->label(trans('extra')),
                 Select::make('notify')->required()->options([
                         '0' => 'None',
@@ -56,7 +56,7 @@ class UserProfilesRelationManager extends RelationManager
                 TextColumn::make('first_name')->label(trans('First Name')),
                 TextColumn::make('last_name')->label(trans('Last Name')),
                 TextColumn::make('phone')->label(trans('Phone')),
-                TextColumn::make('phone_app')->label(trans('phone_app')),
+                TextColumn::make('responsibility')->label(trans('Responsibility')),
                 TextColumn::make('extra')->label(trans('extra')),
                 TextColumn::make('notify')->formatStateUsing(fn (int $state): string => 
                     $state == 0 ? 'None' : ($state == 1 ? 'Email' : ($state == 2 ? 'Other' : ''))

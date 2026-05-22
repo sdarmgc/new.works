@@ -12,6 +12,9 @@ class Gender extends Column
     {
         return Tables\Columns\TextColumn::make('profile.gender')
             ->formatStateUsing(fn (bool $state): string => $state ? 'Br.' : 'Sis.')
-            ->sortable()->label(trans('Title'));
+            ->sortable()
+            ->toggleable()
+            ->label(trans('Title'))
+            ;
     }
 }

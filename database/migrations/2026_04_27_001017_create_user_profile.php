@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('phone', 20)->nullable();
-            $table->string('phone_app', 16)->nullable();
+            $table->string('responsibility', 127)->nullable();
             $table->string('extra')->nullable();
             $table->boolean('notify')->default(0)->comment('0:None, 1:email, 2:sms');
             $table->tinyInteger('active')->default(0)->unsigned();
@@ -44,7 +44,7 @@ return new class extends Migration
                     'id' => $user->id,
                     'name' => $user->first_name . ' ' . $user->last_name,
                     'email' => $user->email,
-                    'email_verified_at' => time(),
+                    'email_verified_at' => '2026-01-01 00:00:00',
                     'password' => $user->password,
                     'created_at' => $user->created_at,
                     'updated_at' => $user->updated_at,
@@ -56,7 +56,7 @@ return new class extends Migration
                     'first_name' => $user->first_name,
                     'last_name'  => $user->last_name,
                     'phone' => $user->phone,
-                    'phone_app' => $user->phone_app,
+                    'responsibility' => $user->role,
                     'extra' => $user->extra,
                     'notify' => $user->notify,
                     'active' => $user->active,
@@ -69,7 +69,7 @@ return new class extends Migration
                     if ($id) {
                         $languages[] = [
                             'user_id' => $user->id,
-                            'lang_id' => $id
+                            'language_id' => $id
                         ];
                     }
                 }
@@ -88,7 +88,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_profile');
+        Schema::dropIfExists('user_profiles');
         Schema::table('users', function (Blueprint $table) {
             $table->dropSoftDeletes(); // Removes the column if rolled back
         });

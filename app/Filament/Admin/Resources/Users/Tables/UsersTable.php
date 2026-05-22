@@ -38,11 +38,11 @@ class UsersTable
             Columns\MailGroups::make(),
 
             // user profile
+            Columns\Responsibility::make(),
             Columns\Gender::make(),
             Columns\FirstName::make(),
             Columns\LastName::make(),
             Columns\Phone::make(),
-            Columns\PhoneApp::make(),
             Columns\Extra::make(),
             Columns\Notify::make(),
             // Columns\Active::make(),

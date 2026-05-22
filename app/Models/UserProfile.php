@@ -17,7 +17,7 @@ class UserProfile extends Model
         'first_name',
         'last_name',
         'phone',
-        'phone_app',
+        'responsibility',
         'extra',
         'notify',
         'active',

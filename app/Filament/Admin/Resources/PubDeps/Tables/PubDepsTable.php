@@ -25,7 +25,7 @@ class PubDepsTable
                 Columns\FirstName::make(),
                 Columns\LastName::make(),
                 Columns\Phone::make(),
-                Columns\PhoneApp::make(),
+                Columns\Responsibility::make(),
                 // Columns\Notify::make(),
                 Columns\LastLoginAt::make(),
                 Columns\LastLoginIP::make(),

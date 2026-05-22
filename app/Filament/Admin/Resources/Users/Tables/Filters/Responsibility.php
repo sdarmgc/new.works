@@ -8,20 +8,19 @@ use Filament\Tables;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 
-class FullName extends Filter
+class Responsibility extends Filter
 {
     public static function make(): Tables\Filters\Filter
     {
-        return Tables\Filters\Filter::make('fullname')
+        return Tables\Filters\Filter::make('responsibility')
             ->form([
-                TextInput::make('fullname')->label('Fisrt, Last Name'),
+                TextInput::make('responsibility')->label('Responsibility'),
             ])
             ->query(function (Builder $query, array $data): Builder {
                 return $query->when(
-                    $data['fullname'],
+                    $data['responsibility'],
                     fn (Builder $query, $value): Builder => $query->whereHas('profile', function (Builder $query) use ($value) {
-                        $query->where('first_name', 'like', "{$value}%")
-                            ->orWhere('last_name', 'like', "{$value}%")
+                        $query->where('responsibility', 'like', "{$value}%")
                         ;
                     }),
                 );

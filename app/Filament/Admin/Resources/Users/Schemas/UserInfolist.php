@@ -34,7 +34,7 @@ class UserInfolist
         $components[] = Entries\FirstName::make();
         $components[] = Entries\LastName::make();
         $components[] = Entries\Phone::make();
-        $components[] = Entries\PhoneApp::make();
+        $components[] = Entries\Responsibility::make();
         $components[] = Entries\Extra::make();
         $components[] = Entries\Active::make();
         $components[] = Entries\Notify::make();

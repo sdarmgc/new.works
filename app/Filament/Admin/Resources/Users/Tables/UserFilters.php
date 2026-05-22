@@ -25,9 +25,9 @@ class UserFilters
             Filters\Roles::make(),
 
             // user profile
-            // Filters\Title::make(),
+            Filters\Responsibility::make(),
             Filters\FullName::make(),
-            Filters\Notify::make(),
+            // Filters\Notify::make(),
         ];
     }
 

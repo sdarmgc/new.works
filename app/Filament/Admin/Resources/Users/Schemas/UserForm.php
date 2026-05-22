@@ -39,8 +39,8 @@ class UserForm
                     Components\FirstName::make(),
                     Components\LastName::make(),
                     Components\Phone::make(),
-                    Components\PhoneApp::make(),
                     Components\Notify::make(),
+                    Components\Responsibility::make(),
                     Components\Extra::make(),
                 ])
                 ->columnSpanFull()
