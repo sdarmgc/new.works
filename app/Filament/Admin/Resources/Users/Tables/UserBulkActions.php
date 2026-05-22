@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Resources\Users\Tables;
 
 use Filament\Actions\BulkAction;
+use App\Filament\Admin\Resources\Users\Tables\BulkActions\SendEmailAction;
 use App\Filament\Admin\Resources\Users\Tables\BulkActions\DeleteAction;
 
 class UserBulkActions
@@ -22,6 +23,7 @@ class UserBulkActions
     private static function getDefaultActions(): array
     {
         return [
+            SendEmailAction::make(),
             DeleteAction::make()
         ];
     }
