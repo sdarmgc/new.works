@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Socialite;
 use App\Models\User;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EmailController;
 
 
 Route::get('/', function () {
@@ -17,13 +18,10 @@ Route::get('/login/{provider}/redirect', function ($provider) {
  
 Route::get('/login/{provider}/callback', function ($provider) {
     $socialUser = Socialite::driver($provider)->user();
-
     $user = User::where('email', $socialUser['email'])
         ->whereHas('profile', fn ($query) => $query->where('active', true))->first();
- 
     // Log the user in manually
     Auth::guard('web')->login($user);
-
     // Redirect to the dashboard
     return redirect()->intended('/dashboard');
 });
@@ -43,4 +41,19 @@ Route::middleware([
     Route::get('/user/profile', function () {
         return view('profile.show');
     })->name('profile.show');
+});
+
+
+Route::group(['middleware' => ['role:administrator|executive']], function () {
+    /*
+    |--------------------------------------------------------------------------
+    | Email Composer Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('email')->name('email.')->group(function () {
+        Route::get('/compose',              [EmailController::class, 'compose'])->name('compose');
+        Route::post('/send',                [EmailController::class, 'send'])->name('send');
+        Route::get('/template/{name}',      [EmailController::class, 'loadTemplate'])->name('template');
+        Route::get('/templates',            [EmailController::class, 'listTemplates'])->name('templates');
+    });
 });
