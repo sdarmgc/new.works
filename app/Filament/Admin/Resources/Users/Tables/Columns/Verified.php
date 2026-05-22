@@ -14,7 +14,8 @@ class Verified extends Column
             ->state(static fn ($record) => (bool) $record->email_verified_at)
             ->boolean()
             ->sortable()
-            ->label(trans('email_verified_at'))
-            ->toggleable(isToggledHiddenByDefault: true);
+            ->toggleable(isToggledHiddenByDefault: true)
+            ->label(trans('Email Verified At'))
+            ;
     }
 }

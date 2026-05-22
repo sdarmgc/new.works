@@ -17,7 +17,7 @@ class Gender extends Component
         return Forms\Components\Select::make('gender')
             ->options([
                 '0' => 'None',
-                '1' => 'Bros.',
+                '1' => 'Br.',
                 '2' => 'Sis.',
             ])
             ->label(trans('Title'));

@@ -11,7 +11,7 @@ class Gender extends Entry
     public static function make(): Infolists\Components\TextEntry
     {
         return Infolists\Components\TextEntry::make('profile.gender')
-            ->formatStateUsing(fn (int $state): string => $state == 1 ? 'Bro.' : ($state == 2 ? 'Sis.' : ''))
+            ->formatStateUsing(fn (int $state): string => $state == 1 ? 'Br.' : ($state == 2 ? 'Sis.' : ''))
             ->columnSpanFull()
             ->label(trans('Title'));
     }

@@ -15,7 +15,7 @@ class Gender extends Filter
             ->label(trans('Title'))
             ->options([
                 '0' => 'None',
-                '1' => 'Bros.',
+                '1' => 'Br.',
                 '2' => 'Sis.',
             ])
             ->query(function (Builder $query, array $data): Builder {

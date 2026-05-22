@@ -52,7 +52,7 @@ class UserProfilesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('first_name')
             ->columns([
-                TextColumn::make('gender')->formatStateUsing(fn (bool $state): string => $state ? 'Bro.' : 'Sis.')->label(trans('Title')),
+                TextColumn::make('gender')->formatStateUsing(fn (bool $state): string => $state ? 'Br.' : 'Sis.')->label(trans('Title')),
                 TextColumn::make('first_name')->label(trans('First Name')),
                 TextColumn::make('last_name')->label(trans('Last Name')),
                 TextColumn::make('phone')->label(trans('Phone')),
