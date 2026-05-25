@@ -93,6 +93,12 @@
                         </x-slot>
 
                         <x-slot name="content">
+
+                            <!-- Theme Switcher -->
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                <x-theme-switcher />
+                            </div>
+                            
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('Manage Account') }}
@@ -107,6 +113,10 @@
                             </x-dropdown-link>
 
                             @hasanyrole('super-admin|administrator|executive')
+                                <x-dropdown-link href="{{ url('/email/compose') }}">
+                                    {{ __('Compose Email') }}
+                                </x-dropdown-link>
+
                                 <x-dropdown-link href="{{ url('/admin') }}">
                                     {{ __('Admin Dashboard') }}
                                 </x-dropdown-link>
@@ -170,10 +180,30 @@
             </div>
 
             <div class="mt-3 space-y-1">
+
+                <!-- Theme Switcher -->
+                <div class="block px-4 py-2 text-xs text-gray-400">
+                    <x-theme-switcher />
+                </div>
+
                 <!-- Account Management -->
                 <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+
+                <x-dropdown-link href="{{ route('contact') }}">
+                    {{ __('Contact') }}
+                </x-dropdown-link>
+
+                @hasanyrole('super-admin|administrator|executive')
+                    <x-dropdown-link href="{{ url('/email/compose') }}">
+                        {{ __('Compose Email') }}
+                    </x-dropdown-link>
+
+                    <x-dropdown-link href="{{ url('/admin') }}">
+                        {{ __('Admin Dashboard') }}
+                    </x-dropdown-link>
+                @endhasanyrole
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                     <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
