@@ -1,25 +1,5 @@
-<x-app-layout>
 
-{{--
-  The <x-slot name="header"> is intentionally omitted — our own topbar shows the title,
-  which lets us use a clean calc(100vh - 4rem) (just the navbar height).
---}}
-
-{{--
-  /*
-  * .ms-shell fills exactly the viewport below Jetstream's navbar (h-16 = 4rem = 64px).
-  * No <x-slot name="header"> is used, so nothing else to subtract.
-  *
-  * THEMING: vars are defined on .ms-shell (and .ms-modal / .ms-toast for elements
-  * that live outside .ms-shell in the DOM).  Switching between light and dark is
-  * handled entirely in CSS by reacting to  html.dark  — exactly what Jetstream 5
-  * adds/removes when the user toggles the theme.
-  */
---}}
-
-{{-- ── LIGHT THEME (default, html:not(.dark)) ────────────────────────── --}}
-
-@push('styles')
+{{--  @push('styles') --}}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.2/quill.snow.min.css" rel="stylesheet" />
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
@@ -114,7 +94,7 @@
     text-transform: uppercase; color: var(--ms-text-3);
     white-space: nowrap; flex-shrink: 0;
   }
-  .ms-chip {
+  .ms-chip, .ms-chip-mail-group {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 5px 12px; border-radius: 100px;
     border: 1px solid var(--ms-border); background: var(--ms-surface-2);
@@ -122,8 +102,8 @@
     font-size: 13px; font-weight: 500; color: var(--ms-text-2);
     font-family: 'DM Sans', sans-serif;
   }
-  .ms-chip:hover  { border-color: var(--ms-accent-dim); color: var(--ms-accent); background: rgba(240,165,0,.07); }
-  .ms-chip.active { border-color: var(--ms-accent); color: var(--ms-accent); background: rgba(240,165,0,.12); }
+  .ms-chip:hover, .ms-chip-mail-group:hover  { border-color: var(--ms-accent-dim); color: var(--ms-accent); background: rgba(240,165,0,.07); }
+  .ms-chip.active, .ms-chip-mail-group.active { border-color: var(--ms-accent); color: var(--ms-accent); background: rgba(240,165,0,.12); }
 
   /* ── COMPOSE SCROLL AREA (grows to fill remaining height) ── */
   .ms-compose-area {
@@ -353,162 +333,177 @@
   .ms-tpl-meta .tpl-name    { font-size: 13px; font-weight: 600; color: var(--ms-text-1); margin-bottom: 3px; }
   .ms-tpl-meta .tpl-subject { font-size: 11px; color: var(--ms-text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 </style>
-@endpush
+{{--  @endpush --}}
 
 {{-- ══════════════════════════════════════════════
      COMPOSE UI
      ══════════════════════════════════════════════ --}}
-<div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
 
-          <div class="ms-shell">
+<div class="wrapper">
+    {{-- ms-shell - main composer area --}}
+    <div class="ms-shell">
 
-            {{-- TOP BAR --}}
-            <div class="ms-topbar">
-              <!--span class="ms-topbar-title">New Message</span-->
-              <!--span class="ms-topbar-sub"> &mdash; Compose</span-->
-              <div class="ms-topbar-right">
-                <button class="ms-btn" onclick="msOpenTemplateModal()">🗂 &nbsp;Templates</button>
-                <button class="ms-btn" onclick="msSaveDraft()">💾 &nbsp;Save Draft</button>
-                <button class="ms-btn primary" onclick="msSendEmail()">Send &nbsp;&rarr;</button>
-              </div>
-            </div>
-
-            {{-- TEMPLATE CHIP STRIP --}}
-            <div class="ms-template-strip">
-              <div class="ms-strip-inner">
-                <span class="ms-strip-label">Templates:</span>
-                @foreach($templates as $tpl)
-                <button class="ms-chip" data-name="{{ $tpl['name'] }}"
-                        onclick="msSelectTemplate('{{ $tpl['name'] }}', this)">
-                  <span>
-                    @switch($tpl['name'])
-                      @case('welcome')            🙌 @break
-                      @case('newsletter')         📰 @break
-                      @default                    📄
-                    @endswitch
-                  </span>
-                  {{ $tpl['label'] }}
-                </button>
-                @endforeach
-                <button class="ms-chip" style="border-style:dashed" onclick="msClearTemplate()">
-                  ✕ Clear
-                </button>
-              </div>
-            </div>
-
-            {{-- FIELDS + EDITOR --}}
-            <div class="ms-compose-area">
-
-              {{-- TO --}}
-              <div class="ms-field-row">
-                <span class="ms-field-label">To</span>
-                <input id="ms-to" type="text" class="ms-field-input" value="{{ $addresses }}"
-                      placeholder="recipient@example.com, another@example.com" autocomplete="off" />
-                <div class="ms-field-actions">
-                  <button class="ms-toggle" id="msCcBtn"  onclick="msToggleField('cc')">Cc</button>
-                  <button class="ms-toggle" id="msBccBtn" onclick="msToggleField('bcc')">Bcc</button>
-                </div>
-              </div>
-
-              {{-- CC --}}
-              <div class="ms-field-row" id="msCcRow" style="display:none">
-                <span class="ms-field-label">Cc</span>
-                <input id="ms-cc" type="text" class="ms-field-input"
-                      placeholder="cc@example.com" autocomplete="off" />
-              </div>
-
-              {{-- BCC --}}
-              <div class="ms-field-row" id="msBccRow" style="display:none">
-                <span class="ms-field-label">Bcc</span>
-                <input id="ms-bcc" type="text" class="ms-field-input"
-                      placeholder="bcc@example.com" autocomplete="off" />
-              </div>
-
-              {{-- SUBJECT --}}
-              <div class="ms-field-row">
-                <span class="ms-field-label">Subj</span>
-                <input id="ms-subject" type="text" class="ms-field-input"
-                      placeholder="Subject" autocomplete="off" />
-              </div>
-
-              {{-- QUILL --}}
-              <div class="ms-editor-wrap">
-                <div id="ms-editor"></div>
-              </div>
-
-            </div>{{-- /ms-compose-area --}}
-
-            {{-- ATTACHMENT BAR --}}
-            <div class="ms-attach-bar">
-              <button class="ms-attach-btn" onclick="document.getElementById('msFileInput').click()">
-                📎 &nbsp;Attach file
-              </button>
-              <input type="file" id="msFileInput" multiple style="display:none"
-                    onchange="msHandleAttachments(this.files)" />
-              <div id="msAttachList" style="display:contents"></div>
-              <span class="ms-save-status" id="msSaveStatus" style="margin-left:auto"></span>
-              <div class="ms-spinner" id="msSpinner"></div>
-            </div>
-
-            {{-- ACTION BAR --}}
-            <div class="ms-action-bar">
-              <button class="ms-send-btn" id="msSendBtn" onclick="msSendEmail()">
-                Send &nbsp;&rarr;
-              </button>
-              <button class="ms-btn" title="Save draft"  onclick="msSaveDraft()">💾 &nbsp;Save Draft</button>
-              <button class="ms-btn" title="Attach file" onclick="document.getElementById('msFileInput').click()">📎 &nbsp;Attach File</button>
-              <!-- button class="ms-icon-btn" title="Schedule (demo)">🕐</button -->
-              <div class="ms-action-sep"></div>
-              <button class="ms-btn danger" title="Discard" onclick="msDiscardDraft()">🗑 &nbsp;Discard</button>
-            </div>
-
-          </div>{{-- /ms-shell --}}
-
+    {{-- TOP BAR --}}
+    <div class="ms-topbar">
+        <!--span class="ms-topbar-title">New Message</span-->
+        <!--span class="ms-topbar-sub"> &mdash; Compose</span-->
+        <div class="ms-topbar-right">
+        {{--  <button class="ms-btn" onclick="msOpenTemplateModal()">🗂 &nbsp;Templates</button> --}}
+        <button class="ms-btn" onclick="msSaveDraft()">💾 &nbsp;Save Draft</button>
+        <button class="ms-btn primary" onclick="msSendEmail()">Send &nbsp;&rarr;</button>
         </div>
     </div>
-</div>
 
-{{-- Modal + Toast live outside ms-shell so they layer over the Jetstream nav correctly --}}
-<div class="ms-modal-overlay" id="msTplModal" onclick="msCloseModalOnOverlay(event)">
-  <div class="ms-modal">
-    <div class="ms-modal-header">
-      <h2>Choose a Template</h2>
-      <button class="ms-modal-close" onclick="msCloseTemplateModal()">✕</button>
-    </div>
-    <div class="ms-modal-body">
-      <div class="ms-tpl-grid">
+    {{-- TEMPLATE CHIP STRIP --}}
+    <div class="ms-template-strip">
+        <div class="ms-strip-inner">
+        <span class="ms-strip-label">Templates:</span>
         @foreach($templates as $tpl)
-        <div class="ms-tpl-card" id="msCard-{{ $tpl['name'] }}"
-            data-name="{{ $tpl['name'] }}"
-            onclick="msPreviewTemplate('{{ $tpl['name'] }}', this)">
-          <div class="ms-tpl-preview">
-            <iframe sandbox="allow-same-origin" loading="lazy" title="{{ $tpl['label'] }}"></iframe>
-          </div>
-          <div class="ms-tpl-meta">
-            <div class="tpl-name">{{ $tpl['label'] }}</div>
-            <div class="tpl-subject">{{ $tpl['subject'] ?: 'No subject' }}</div>
-          </div>
-        </div>
+        <button class="ms-chip" data-name="{{ $tpl['name'] }}"
+                onclick="msSelectTemplate('{{ $tpl['name'] }}', this)">
+            <span>
+            @switch($tpl['name'])
+                @case('welcome')            🙌 @break
+                @case('newsletter')         📰 @break
+                @default                    📄
+            @endswitch
+            </span>
+            {{ $tpl['label'] }}
+        </button>
         @endforeach
-      </div>
+        <button class="ms-chip" style="border-style:dashed" onclick="msClearTemplate()">
+            ✕ Clear
+        </button>
+        </div>
     </div>
-    <div class="ms-modal-footer">
-      <button class="ms-btn" onclick="msCloseTemplateModal()">Cancel</button>
-      <button class="ms-btn primary" id="msApplyTplBtn"
-              onclick="msApplySelectedTemplate()" disabled>Apply Template &rarr;</button>
-    </div>
-  </div>
-</div>
 
-<div class="ms-toast" id="msToast">
-  <span class="ms-toast-icon" id="msToastIcon"></span>
-  <span id="msToastMsg"></span>
+    {{-- MAILING GROUP STRIP --}}
+    <div class="ms-template-strip">
+        <div class="ms-strip-inner">
+        <span class="ms-strip-label">Mail Groups:</span>
+        @foreach($emailsByGroup as $group => $emails)
+        <button class="ms-chip-mail-group" data-name="{{ $group }}"
+                onclick="msSelectMailGroup('{{ $group }}', this)">
+            <span>
+            🌐
+            </span>
+            {{ $group }}
+        </button>
+        @endforeach
+        <button class="ms-chip-mail-group" style="border-style:dashed" onclick="msClearMailGroup()">
+            ✕ Clear
+        </button>
+        </div>
+    </div>
+
+    {{-- FIELDS + EDITOR --}}
+    <div class="ms-compose-area">
+
+        {{-- TO --}}
+        <div class="ms-field-row">
+        <span class="ms-field-label">To</span>
+        <input id="ms-to" type="text" class="ms-field-input" value="{{ $addresses }}"
+                placeholder="recipient@example.com, another@example.com" autocomplete="off" />
+        <div class="ms-field-actions">
+            <button class="ms-toggle" id="msCcBtn"  onclick="msToggleField('cc')">Cc</button>
+            <button class="ms-toggle" id="msBccBtn" onclick="msToggleField('bcc')">Bcc</button>
+        </div>
+        </div>
+
+        {{-- CC --}}
+        <div class="ms-field-row" id="msCcRow" style="display:none">
+        <span class="ms-field-label">Cc</span>
+        <input id="ms-cc" type="text" class="ms-field-input"
+                placeholder="cc@example.com" autocomplete="off" />
+        </div>
+
+        {{-- BCC --}}
+        <div class="ms-field-row" id="msBccRow" style="display:none">
+        <span class="ms-field-label">Bcc</span>
+        <input id="ms-bcc" type="text" class="ms-field-input"
+                placeholder="bcc@example.com" autocomplete="off" />
+        </div>
+
+        {{-- SUBJECT --}}
+        <div class="ms-field-row">
+        <span class="ms-field-label">Subj</span>
+        <input id="ms-subject" type="text" class="ms-field-input"
+                placeholder="Subject" autocomplete="off" />
+        </div>
+
+        {{-- QUILL --}}
+        <div class="ms-editor-wrap">
+        <div id="ms-editor"></div>
+        </div>
+
+    </div>{{-- /ms-compose-area --}}
+
+    {{-- ATTACHMENT BAR --}}
+    <div class="ms-attach-bar">
+        <button class="ms-attach-btn" onclick="document.getElementById('msFileInput').click()">
+        📎 &nbsp;Attach file
+        </button>
+        <input type="file" id="msFileInput" multiple style="display:none"
+            onchange="msHandleAttachments(this.files)" />
+        <div id="msAttachList" style="display:contents"></div>
+        <span class="ms-save-status" id="msSaveStatus" style="margin-left:auto"></span>
+        <div class="ms-spinner" id="msSpinner"></div>
+    </div>
+
+    {{-- ACTION BAR --}}
+    <div class="ms-action-bar">
+        <button class="ms-send-btn" id="msSendBtn" onclick="msSendEmail()">
+        Send &nbsp;&rarr;
+        </button>
+        <button class="ms-btn" title="Save draft"  onclick="msSaveDraft()">💾 &nbsp;Save Draft</button>
+        <button class="ms-btn" title="Attach file" onclick="document.getElementById('msFileInput').click()">📎 &nbsp;Attach File</button>
+        <!-- button class="ms-icon-btn" title="Schedule (demo)">🕐</button -->
+        <div class="ms-action-sep"></div>
+        <button class="ms-btn danger" title="Discard" onclick="msDiscardDraft()">🗑 &nbsp;Discard</button>
+    </div>
+
+    </div>{{-- /ms-shell --}}
+
+    {{-- Modal + Toast live outside ms-shell so they layer over the Jetstream nav correctly --}}
+    <div class="ms-modal-overlay" id="msTplModal" onclick="msCloseModalOnOverlay(event)">
+    <div class="ms-modal">
+        <div class="ms-modal-header">
+        <h2>Choose a Template</h2>
+        <button class="ms-modal-close" onclick="msCloseTemplateModal()">✕</button>
+        </div>
+        <div class="ms-modal-body">
+        <div class="ms-tpl-grid">
+            @foreach($templates as $tpl)
+            <div class="ms-tpl-card" id="msCard-{{ $tpl['name'] }}"
+                data-name="{{ $tpl['name'] }}"
+                onclick="msPreviewTemplate('{{ $tpl['name'] }}', this)">
+            <div class="ms-tpl-preview">
+                <iframe sandbox="allow-same-origin" loading="lazy" title="{{ $tpl['label'] }}"></iframe>
+            </div>
+            <div class="ms-tpl-meta">
+                <div class="tpl-name">{{ $tpl['label'] }}</div>
+                <div class="tpl-subject">{{ $tpl['subject'] ?: 'No subject' }}</div>
+            </div>
+            </div>
+            @endforeach
+        </div>
+        </div>
+        <div class="ms-modal-footer">
+        <button class="ms-btn" onclick="msCloseTemplateModal()">Cancel</button>
+        <button class="ms-btn primary" id="msApplyTplBtn"
+                onclick="msApplySelectedTemplate()" disabled>Apply Template &rarr;</button>
+        </div>
+    </div>
+    </div>
+
+    <div class="ms-toast" id="msToast">
+        <span class="ms-toast-icon" id="msToastIcon"></span>
+        <span id="msToastMsg"></span>
+    </div>
 </div>
 
 {{-- Quill JS — inline because Jetstream's layout has no @stack('scripts') by default --}}
-@push('after-scripts')
+{{--  @push('after-scripts') --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.2/quill.min.js"></script>
 <script>
   // ── QUILL ─────────────────────────────────────────────────────────────
@@ -591,6 +586,7 @@
   function msClearTemplate() {
     document.querySelectorAll('.ms-chip').forEach(c => c.classList.remove('active'));
     msQuill.setContents([]);
+    document.getElementById('ms-subject').value = '';
     msSetStatus('Cleared', '🗑');
   }
 
@@ -653,6 +649,23 @@
   }
   function msTplRoute(name) {
     return '{{ route("email.template", ":name") }}'.replace(':name', name);
+  }
+
+  // ── MAILING GROUP STRIP ────────────────────────────────────────────────────
+  async function msSelectMailGroup(name, chipEl) {
+    document.getElementById('ms-to').value = '{{ $mailGroupTo }}';
+    chipEl.parentElement.querySelectorAll('.ms-chip-mail-group').forEach(c => c.classList.remove('active'));
+    chipEl.classList.add('active');
+    group = {!! json_encode($emailsByGroup) !!};
+    list = group[name].flat().join(', ');
+    document.getElementById('ms-bcc').value = list;
+    if (document.getElementById('msBccRow').style.display === 'none') msToggleField('bcc');
+  }
+  function msClearMailGroup() {
+    document.querySelectorAll('.ms-chip-mail-group').forEach(c => c.classList.remove('active'));
+    document.getElementById('ms-to').value = '';
+    document.getElementById('ms-bcc').value = '';
+    msSetStatus('Cleared', '🗑');
   }
 
   // ── ATTACHMENTS ───────────────────────────────────────────────────────
@@ -779,8 +792,11 @@
   // Restore draft on load
   msLoadDraft();
 
+  if ({{ strlen($mailGropuName) > 0 ? 'true' : 'false' }}) {
+    const groupBtn = document.querySelector(`.ms-chip-mail-group[data-name="{{ $mailGropuName }}"]`);
+    if (groupBtn) msSelectMailGroup('{{ $mailGropuName }}', groupBtn);
+  }
+
 
 </script>
-@endpush
-
-</x-app-layout>
+{{--  @endpush --}}

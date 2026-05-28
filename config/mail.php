@@ -115,6 +115,8 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
     
-    'admin_address' => env('MAIL_ADMIN_ADDRESS', env('MAIL_FROM_ADDRESS', 'donotreply@sdarm.org'))
+    'admin_address' => env('MAIL_ADMIN_ADDRESS', env('MAIL_FROM_ADDRESS', 'donotreply@sdarm.org')),
+
+    'group_to_address' => env('MAIL_GROUP_TO_ADDRESS', 'publishing@sdarm.org'),
 
 ];

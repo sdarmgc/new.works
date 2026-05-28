@@ -17,7 +17,7 @@ class SendEmailAction extends Action
             ->color('primary')
             ->label(trans('Send Email'))
             ->action(function (Collection $records, \Livewire\Component $livewire) {
-                $addresses = $records->pluck('email')->implode(',');
+                $addresses = $records->pluck('email')->implode(', ');
                 return $livewire->redirect(
                     route('email.compose', ['to' => $addresses])
                 );

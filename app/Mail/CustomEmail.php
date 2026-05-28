@@ -29,7 +29,7 @@ class CustomEmail extends Mailable
 
     public function content(): Content
     {
-        return new Content(view: 'emails.composer.raw-html');
+        return new Content(view: 'emails.compose.raw-html');
     }
 
     /**

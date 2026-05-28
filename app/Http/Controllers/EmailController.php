@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\CustomEmail;
+use App\Models\User;
+use App\Models\MailGroup;
 
 class EmailController extends Controller
 {
@@ -28,12 +30,29 @@ class EmailController extends Controller
     {
         $validated = $request->validate([
             'to'          => ['string'],   // comma-separated addresses
+            'mail_group'  => ['string'],   // optional mail group name
         ]);
 
         $templates = $this->getTemplateList();
         $addresses = $validated['to'] ?? '';
 
-        return view('emails.composer.compose', compact('templates', 'addresses'));
+        // mail groups
+        $mailGropuName = $validated['mail_group'] ?? null;
+        $mailGroupTo = config('mail.group_to_address', 'publishing@sdarm.org');
+        $mailGroups = MailGroup::with('users')->get();
+        $emailsByGroup = $mailGroups->mapToGroups(function ($mailGroup) {
+            return [
+                $mailGroup->name => $mailGroup->users->pluck('email')->all(),
+            ];
+        })->toArray();
+        
+        return view('emails.compose.composer', [
+            'templates'     => $templates,
+            'addresses'     => $addresses,
+            'mailGroupTo'   => $mailGroupTo,
+            'emailsByGroup' => $emailsByGroup,
+            'mailGropuName' => $mailGropuName
+        ]);
     }
 
     // ---------------------------------------------------------------
