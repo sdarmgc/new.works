@@ -508,7 +508,7 @@
 </div>
 
 {{-- Quill JS — inline because Jetstream's layout has no @stack('scripts') by default --}}
-@push('scripts')
+@push('after-scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.2/quill.min.js"></script>
 <script>
   // ── QUILL ─────────────────────────────────────────────────────────────
