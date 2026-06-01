@@ -23,6 +23,7 @@ class UsersTable
             ->toolbarActions(UserBulkActions::class::make())
             ->persistFiltersInSession()
             ->deferFilters(false)   // enable filter live
+            ->paginated([10, 25, 50, 100, 'all']) 
             ;
     }
 

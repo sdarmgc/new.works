@@ -56,6 +56,7 @@ class PubDepsTable
             ])
             ->deferFilters(false)   // enable filter live
             // ->heading('Custom Table Name')
+            ->paginated([10, 25, 50, 100, 'all']) 
             ;
     }
 }
