@@ -16,6 +16,105 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="https://works.sdarm.org/publications/reader">
+                        {{ __('Reader') }}
+                    </x-nav-link>
+                </div>
+                
+                @hasanyrole('super-admin|administrator|executive|translator')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="https://works.sdarm.org/publications/manuscripts">
+                        {{ __('Manuscripts') }}
+                    </x-nav-link>
+                </div>
+                @endhasanyrole
+
+                @hasanyrole('super-admin|administrator')
+                <div class="hidden sm:flex sm:items-center sm:ms-6 mt-1">
+                    <div class="ms-3 relative">
+                        <x-dropdown align="left" width="60">
+                            <x-slot name="trigger">
+                                <span class="inline-flex rounded-md">
+                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
+                                        {{ __('Tools') }}
+
+                                        <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </button>
+                                </span>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <div class="w-60">
+                                    <!-- Tools -->
+                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                        {{ __('Tools') }}
+                                    </div>
+
+                                    <x-dropdown-link href="https://works.sdarm.org/tools/article-converter">
+                                        {{ __('Article Converter') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link href="https://works.sdarm.org/tools/sbl/sbl-converter">
+                                        {{ __('SBL Converter') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link href="https://works.sdarm.org/tools/sbl/insert-date">
+                                        {{ __('SBL Insert Date') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link href="https://works.sdarm.org/tools/bible/bible-converter">
+                                        {{ __('Bible Converter') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link href="https://works.sdarm.org/tools/bible/xml-bible-converter">
+                                        {{ __('XML Bible Converter') }}
+                                    </x-dropdown-link>
+                                </div>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
+                </div>
+                <div class="hidden sm:flex sm:items-center sm:ms-6 mt-1">
+                    <div class="ms-3 relative">
+                        <x-dropdown align="left" width="60">
+                            <x-slot name="trigger">
+                                <span class="inline-flex rounded-md">
+                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
+                                        {{ __('Contents') }}
+                                        <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </button>
+                                </span>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <div class="w-60">
+                                    <!-- Tools -->
+                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                        {{ __('Database') }}
+                                    </div>
+                                    <x-dropdown-link href="https://works.sdarm.org/publications/manage/update-pub-db">
+                                        {{ __('Update Publication DB') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link href="https://works.sdarm.org/publications/manage/rebuild-pub-db">
+                                        {{ __('Rebuild Publication DB') }}
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link href="https://works.sdarm.org/publications/manage/rebuild-sb-db">
+                                        {{ __('Rebuild StudyBible DB') }}
+                                    </x-dropdown-link>
+                                </div>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
+                </div>
+                @endhasanyrole
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
