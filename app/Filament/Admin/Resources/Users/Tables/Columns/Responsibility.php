@@ -12,6 +12,8 @@ class Responsibility extends Column
     {
         return Tables\Columns\TextColumn::make('profile.responsibility')
             ->toggleable(isToggledHiddenByDefault: false)
+            ->searchable()
+            ->sortable()
             ->label(trans('Responsibility'))
             ;
     }

@@ -32,6 +32,10 @@ class UsersTable
         $columns = [
             Columns\ID::make(),
             Columns\Name::make(),
+            Columns\Gender::make(),
+            Columns\FirstName::make(),
+            Columns\LastName::make(),
+            Columns\Phone::make(),
             Columns\Email::make(),
             Columns\Roles::make(),
             Columns\Languages::make(),
@@ -40,10 +44,6 @@ class UsersTable
 
             // user profile
             Columns\Responsibility::make(),
-            Columns\Gender::make(),
-            Columns\FirstName::make(),
-            Columns\LastName::make(),
-            Columns\Phone::make(),
             Columns\Extra::make(),
             Columns\Notify::make(),
             // Columns\Active::make(),

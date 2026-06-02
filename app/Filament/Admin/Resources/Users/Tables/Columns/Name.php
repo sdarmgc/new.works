@@ -13,6 +13,8 @@ class Name extends Column
         return Tables\Columns\TextColumn::make('name')
             ->sortable()
             ->searchable()
-            ->label(trans('Nickname'));
+            ->toggleable(isToggledHiddenByDefault: true)
+            ->label(trans('Nickname'))
+            ;
     }
 }

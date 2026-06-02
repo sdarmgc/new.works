@@ -74,7 +74,8 @@ class PubDepResource extends Resource
         return
             $isSimple
                 ? [
-                    'index' => \App\Filament\Admin\Resources\Users\Pages\ManageUsers::route('/'),
+                    // 'index' => \App\Filament\Admin\Resources\Users\Pages\ManageUsers::route('/'),
+                    'index' => ListPubDeps::route('/'),
                 ] : [
                     'index' => ListPubDeps::route('/'),
                     'create' => \App\Filament\Admin\Resources\Users\Pages\CreateUser::route('/create'),

@@ -40,7 +40,7 @@ class PubDepsTable
                 Filters\Languages::make(),
                 Filters\Countries::make(),
                 Filters\MailGroups::make(),
-                Filters\FullName::make(),
+                // Filters\FullName::make(),
                 // Filters\Notify::make(),
             ], layout: FiltersLayout::AboveContent)
             ->recordActions([

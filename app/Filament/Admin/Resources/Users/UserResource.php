@@ -84,7 +84,8 @@ class UserResource extends Resource
         return
             $isSimple
                 ? [
-                    'index' => Pages\ManageUsers::route('/'),
+                    // 'index' => Pages\ManageUsers::route('/'),
+                    'index' => Pages\ListUsers::route('/'),
                 ] : [
                     'index' => Pages\ListUsers::route('/'),
                     'create' => Pages\CreateUser::route('/create'),
