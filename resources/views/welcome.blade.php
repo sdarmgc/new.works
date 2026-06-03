@@ -69,7 +69,7 @@
                     </p>
                     <br />
                     <p class="mb-2 text-[#706f6c]">
-                        <a href="https://works.sdarm.org/publications/reader" class="text-[#1b1b18]">Read our publications</a>
+                        <a href="/publications/reader" class="text-[#1b1b18]">Read our publications</a>
                     </p>
                 </div>
 

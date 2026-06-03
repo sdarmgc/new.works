@@ -18,14 +18,14 @@
                 </div>
                 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="https://works.sdarm.org/publications/reader">
+                    <x-nav-link href="/publications/reader">
                         {{ __('Reader') }}
                     </x-nav-link>
                 </div>
                 
                 @hasanyrole('super-admin|administrator|executive|translator')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="https://works.sdarm.org/publications/manuscripts">
+                    <x-nav-link href="/publications/manuscripts">
                         {{ __('Manuscripts') }}
                     </x-nav-link>
                 </div>
@@ -54,23 +54,23 @@
                                         {{ __('Tools') }}
                                     </div>
 
-                                    <x-dropdown-link href="https://works.sdarm.org/tools/article-converter">
+                                    <x-dropdown-link href="/tools/article-converter">
                                         {{ __('Article Converter') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link href="https://works.sdarm.org/tools/sbl/sbl-converter">
+                                    <x-dropdown-link href="/tools/sbl/sbl-converter">
                                         {{ __('SBL Converter') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link href="https://works.sdarm.org/tools/sbl/insert-date">
+                                    <x-dropdown-link href="/tools/sbl/insert-date">
                                         {{ __('SBL Insert Date') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link href="https://works.sdarm.org/tools/bible/bible-converter">
+                                    <x-dropdown-link href="/tools/bible/bible-converter">
                                         {{ __('Bible Converter') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link href="https://works.sdarm.org/tools/bible/xml-bible-converter">
+                                    <x-dropdown-link href="/tools/bible/xml-bible-converter">
                                         {{ __('XML Bible Converter') }}
                                     </x-dropdown-link>
                                 </div>
@@ -98,15 +98,15 @@
                                     <div class="block px-4 py-2 text-xs text-gray-400">
                                         {{ __('Database') }}
                                     </div>
-                                    <x-dropdown-link href="https://works.sdarm.org/publications/manage/update-pub-db">
+                                    <x-dropdown-link href="/publications/manage/update-pub-db">
                                         {{ __('Update Publication DB') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link href="https://works.sdarm.org/publications/manage/rebuild-pub-db">
+                                    <x-dropdown-link href="/publications/manage/rebuild-pub-db">
                                         {{ __('Rebuild Publication DB') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link href="https://works.sdarm.org/publications/manage/rebuild-sb-db">
+                                    <x-dropdown-link href="/publications/manage/rebuild-sb-db">
                                         {{ __('Rebuild StudyBible DB') }}
                                     </x-dropdown-link>
                                 </div>

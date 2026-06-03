@@ -1,0 +1,211 @@
+/* 
+    Created on : Jun 6, 2016, 4:39:15 PM
+    Updated on : Oct 19, 2025
+    Author     : sean
+*/
+
+body {
+  /*font-family: "Times New Roman", Times, serif;*/
+  background: #fff;
+  margin: 20px;
+}
+
+.message-board {
+  line-height: 120%;
+}
+
+.message-board-notice {
+  background-color: #aaffaf;
+  padding: 1em;
+  vertical-align: top;
+}
+
+.message-board-title {
+  background-color: #fff8aa;
+  width: 140px;
+  color: #B22222;
+  padding: 1em;
+  vertical-align: top;
+  font-weight: bold;
+}
+
+.message-board-body {
+  background-color: #fff8aa;
+  padding: 1em;
+  vertical-align: top;
+}
+
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+table {
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+th,
+td {
+  padding: 10px 14px;
+  vertical-align: top;
+  border: none;
+}
+
+th {
+  padding: 0 14px;
+}
+
+.manuscript-item {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.manuscript-item th {
+  background: #f9f9f9;
+  /* subtle header bg */
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  /* just bottom line under headers */
+}
+
+.manuscript-item tr+tr td {
+  border-top: 1px solid #f0f0f0;
+  /* faint line between rows */
+}
+
+.section {
+  border: 1px solid #ccc;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.section-header {
+  background: #eee;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.section-header:hover {
+  background: #e0e0e0;
+}
+
+.section-header i {
+  margin-right: 8px;
+  transition: transform 0.3s ease;
+}
+
+.section-header .name {
+    color: #aaa;
+}
+
+.section-header .name.active {
+    color: #333;
+}
+
+.section-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  background: #fff;
+  /* distinct white background */
+  border-top: 1px solid #ddd;
+  /* separation line */
+  padding: 0 12px;
+  /* inner spacing */
+}
+
+.section.open .section-content {
+  max-height: 500px;
+  /* adjust if you have longer content */
+  padding: 12px;
+}
+
+.section.open .section-header i {
+  transform: rotate(180deg);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.item-name a {
+  margin: 0 0 0 .25em;
+}
+
+/* Align icons + text */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.item i {
+  width: 18px;
+  text-align: center;
+}
+
+.form-group label {
+  margin: 0;
+}
+
+.background-heighted {
+    background: #fd0;
+}
+
+.background-red {
+    background: red;
+}
+
+.background-orange {
+    background: orange;
+}
+
+.background-greenyellow {
+    background: greenyellow;
+}
+
+.background-lime {
+    background: lime;
+}
+
+.background-olive {
+    background: olive;
+}
+
+.background-cadetblue {
+    background: cadetblue;
+}
+
+.background-aqua {
+    background: aqua;
+}
+
+input[type=checkbox] {
+    margin: 5px 0 0;
+}
+
+/*
+ *    Edit
+ */
+.admin-menu {
+    text-align: right;
+    font-size: 0.85em;
+    font-weight: normal;
+    padding: 0 14px;
+}
+
+.form-manuscript .form-control {
+  height: inherit !important;
+}
+
+input .checkbox {
+  box-shadow: inset 0 0px 0px transparent;
+}

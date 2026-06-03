@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid Technologies Online Tools 1.0 (https://www.liquid-technologies.com) -->
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="https://www.w3.org/2009/01/xml.xsd"/> 
+  <xs:element name="book">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="H1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="parag">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="ref" type="xs:string" use="required" />
+                      <xs:attribute name="role" type="xs:string" use="required" />
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element maxOccurs="unbounded" name="H2">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="parag">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute name="ref" type="xs:string" use="required" />
+                            <xs:attribute name="role" type="xs:string" use="required" />
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" name="H3">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="parag">
+                            <xs:complexType mixed="true">
+                              <xs:sequence minOccurs="0">
+                                <xs:choice maxOccurs="unbounded">
+                                  <xs:element maxOccurs="unbounded" name="italic" type="xs:string" />
+                                  <xs:element name="note">
+                                    <xs:complexType mixed="true">
+                                      <xs:sequence>
+                                        <xs:element name="p" type="xs:string" />
+                                      </xs:sequence>
+                                    </xs:complexType>
+                                  </xs:element>
+                                </xs:choice>
+                              </xs:sequence>
+                              <xs:attribute name="ref" type="xs:string" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="val" type="xs:unsignedByte" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="val" type="xs:unsignedByte" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="val" type="xs:string" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="annotations" type="xs:string" use="required" />
+      <xs:attribute ref="xml:lang" use="required" />
+      <xs:attribute name="role" type="xs:string" use="required" />
+      <xs:attribute ref="xml:base" use="required" />
+      <xs:attribute name="title" type="xs:string" use="required" />
+      <xs:attribute name="source_type" type="xs:string" use="required" />
+      <xs:attribute name="title_path" type="xs:string" use="required" />
+      <xs:attribute name="content_depth" type="xs:unsignedByte" use="required" />
+      <xs:attribute name="title_deliminater" type="xs:string" use="required" />
+      <xs:attribute name="description" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

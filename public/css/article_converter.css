@@ -1,0 +1,315 @@
+.app-body {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+	margin: 0.5em;
+}
+
+/* common style */
+.panel {
+    display: flex;
+	border: 1px solid #aaa;
+	background: #fff;
+}
+
+.row {
+	flex-direction: row;
+}
+
+.column {
+	flex-direction: column;
+}
+
+.panel > .header {
+	font-weight: bold;
+	background-color: #ccc;
+	padding: .5em;
+}
+
+.panel > .content {
+	width: 100%;
+	height: 100%;
+	overflow-y: auto;
+}
+
+.panel > .footer {
+	border-top: 1px #aaa solid;
+	font-weight: bold;
+	padding: .5em;
+}
+
+/* ... */
+#panel-container {
+	display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+#attributes-panel {
+	height: 100%;
+	flex-basis: auto;
+	flex: 0 0 auto;
+}
+
+#attributes-panel .content {
+    width: auto;
+	margin: .5em;
+	font-size: 1em;
+	overflow-y: auto;
+}
+
+#content-panel {
+	height: 100%;
+	flex: 1 1 auto;
+}
+
+#panel-editor-wrapper{
+	height: 70%;
+}
+
+#panel-editor-wrapper .header {
+	display: table;
+}
+
+#panel-editor-wrapper .header > div {
+	display: table-cell;
+	color: black !important
+}
+
+/* current position indicator */
+.cur-pos-indicator-wrapper {
+    text-align: right;
+}
+
+#cur-pos-indicator {
+    margin: 0.5em;
+    color: green;
+    cursor: pointer;
+}
+
+#select-goto-wrapper {
+    position: fixed;
+    right: 30;
+}
+
+#panel-editor-content, #panel-preview-content {
+	width: auto;
+	height: 100%;
+	padding: .5em;
+	overflow: scroll;
+}
+
+#panel-editor-content *, #panel-preview-content * {
+	width: auto;
+}
+
+#panel-preview-content {
+    font-family: Georgia, 'Times New Roman', 'DejaVu Serif', serif;
+    font-size: 1em;
+}
+
+#panel-editor-wrapper > .footer {
+	min-height: 1em;
+	color: orange;
+}
+
+#content-panel > .footer *{
+	font-size: 1em !important;
+}
+
+#panel-source-wrapper {
+	height: 30%;
+}
+
+#panel-source {
+	width: 50%;
+	height: 100%;
+}
+
+#panel-logger {
+	width: 50%;
+	height: 100%;
+}
+
+#log-text {
+	width: 100%;
+	height: 100%;
+}
+
+#panel-spliter-vertical {
+    height:5px;
+	max-height: 5px;
+    border: 1px solid #eee;
+	background-color: #aaa;
+    cursor:row-resize;
+}
+
+#panel-spliter-horizontal {
+    width:5px;
+	max-width: 5px;
+    border: 1px solid #eee;
+	background-color: #aaa;
+    cursor:col-resize;
+}
+
+#hover-element {
+	display: none;
+}
+
+/* content preview */
+#panel-article-wrapper {
+	height: 100%;
+}
+
+.control-source, .control-results {
+    margin: 5px 20px;
+}
+
+.control-results {
+    border-left: 1px solid #aaa;
+    padding: 0 0 0 20px;
+}
+
+
+/* menu */
+.menu {
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.menu-subtitle {
+	background-color: #eee;
+	border-top:#bbb 1px solid; 
+	margin-top: 3px;
+	padding: 3px 0 3px;
+	font-weight: bold;
+    color: #777;
+    font-style: italic;
+    font-size: 0.8em;
+}
+
+.flex-accupy-all {
+	flex:1;
+}
+
+.attr-space {
+	margin: 10px 0px 10px;
+    height: 2px;
+    width: 90%;
+    background-color: #bbb;
+}
+
+.selected-attr-block {
+	background-color: rgb(204, 255, 174);
+}
+
+.disabled {
+	color: #aaa;
+	cursor: default;
+}
+
+.selected-element-indicator {
+	cursor: default;
+}
+
+#waiting-icon {
+    position: fixed;
+    left: 48%;
+    top: 48%;
+    margin: auto;
+    background: url(/css/images/loading.gif);
+    width: 64px;
+    height: 64px;
+    z-index: 99999999;
+}
+
+.hide {
+	display: none;
+}
+
+/*
+ * contents style
+ */
+.article-converter .article, article {
+	margin: 5em 0;
+	border-top: rgb(0, 0, 255) 20px solid;
+	border-bottom: #f00 1px solid;
+	border-left: green 10px solid;
+}
+
+.article-converter .abstract, 
+.epigraph, 
+.annotation {
+	border-top: 2px solid #aaa;
+	border-bottom: 2px solid #aaa;
+	border-left: rgb(128, 128, 128) 10px solid;
+}
+#panel-preview-content .article-converter .abstract, 
+#panel-preview-content .epigraph, 
+#panel-preview-content .annotation {
+	border:none;
+}
+
+.article-converter .abstract p, .epigraph p { text-align: center; margin: 0;}
+.article-converter .annotation p, p.author { text-align: right; margin: 0;}
+
+.article-converter .sect1, div.bibliography {
+	margin: .5em 0 0;
+	padding: .5em 0 0;
+	border-top: 2px solid #aaa;
+	border-bottom: 2px solid #aaa;
+	border-left: rgb(255, 125, 40) 10px solid;
+}
+
+.article-converter .sect2 {
+	margin: .5em 0 0;
+	padding: .5em 0 0;
+	border-top: 2px dotted #aaa;
+	border-bottom: 2px dotted #aaa;
+	border-left: rgb(40, 125, 255) 10px solid;
+}
+
+.article-converter .sect3 {
+	margin: .5em 0 0;
+	padding: .5em 0 0;
+	border-top: 2px dashed #aaa;
+	border-bottom: 2px dashed #aaa;
+	border-left: rgb(255, 255, 0) 10px solid;
+}
+
+.article-converter .bibliography .title {
+    color: #585858;
+    font-size: 0.9em;
+    line-height: 1.4em;
+    font-weight: bold;
+} 
+
+.article-converter .biblioentry {
+    color: #585858;
+    font-size: 0.9em;
+    line-height: 1.2em;
+    font-weight: normal;
+    font-style: italic;
+    margin: 0em 0 0em;
+}
+
+.article-converter .bold {
+	font-weight: bold;
+}
+
+.article-converter .italic {
+	font-style: italic;
+}
+
+.article-converter .olink {
+	color: blue;
+	text-decoration: underline;
+}
+
+.article-converter .citation {
+    background-color: lightgreen;
+}
+
+#selection-indicator * {
+	border-top-width: 5px;
+}

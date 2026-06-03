@@ -1,5 +1,5 @@
 // app.js
-import jQuery from 'jquery';
+// import jQuery from 'jquery';
 
-window.$ = window.jQuery = jQuery;
+// window.$ = window.jQuery = jQuery;
  

@@ -1,0 +1,94 @@
+/*
+ *	reader.css
+ */
+
+ nav {
+    position: fixed !important; 
+    width: 100% !important;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.app-info {
+    position: fixed;
+    margin: 0.5em auto;
+    top: 35px;
+    right: 0;
+    border: none;
+    background-color: limegreen;
+}
+
+#cur-pos-indicator {
+    float: none;
+}
+
+#goto {
+    text-align: right;
+}
+
+.container {
+    margin-top: 90px;
+}
+
+/* 
+ * SBL contents 
+ */
+.sbl foreword, .sbl fso, .sbl lesson { border-top: 2px solid #777; margin: 2em 0 0; padding: 1em 0 0; }
+.sbl day_lesson:nth-of-type(2)::before { border-top: 1px solid #aaa;  }
+.sbl lesson_header { float: right; }
+.sbl .day_lesson_header {
+    margin: 2em 0 1em;
+}
+
+
+/*
+ * contents
+ */
+bible-source {color:#aaa;display:inline;}
+bible-verses { margin: 0 0 1em; padding: 0; display: block; }
+bible-verses h1, bible-verses h2, bible-verses h3, bible-verses h4, bible-verses h5 { font-size: 1em; }
+bible-ref { background-color: #ffe; font-size: 1em; font-weight: bold; margin: 0; }
+bible-text { background-color: #ffe; margin: .5em 0 0 1em; padding: 0 .5em 0; display: block;}
+bible-text span, verse { background-color: #ffe; font-size: 1em; font-weight: normal; }
+bible-text verse_no {font-weight: bold; position: relative; top: -0.5em; font-size: 80%;}
+bible-text p { background-color: #ffe; font-size: 1em; font-weight: normal; margin: 0; }
+bible-text p .note { display: none; }
+
+/*
+* 	STYLES FOR: Magazine contents (rmrh,ym)
+*/
+/*
+info {}
+volumn-no{display: block;}
+title-tag {display: block;}
+.magazine book>title-tag {display: block;}
+.magazine book>subtitle {display: block;}
+.magazine volumn-info {display: block;} 
+.magazine mediaobject {display: block;}
+keyword{display: block;}
+author {display: block;}
+info annotation {display: block;}
+annotation, abstract, epigraph {display: block;}
+info-title {display: block;}
+meta-info {display: block;}
+.magazine para {display: block;}
+.magazine para.caption-para {}
+.cap {}
+.bold {}
+.italic {}
+article {display: block;}
+sect1, sect2, sect3 {display: block;}
+article>title-tag {display: block;}
+sect1 title-tag {display: block;}
+sect2 title-tag {display: block;}
+sect3 title-tag {display: block;}
+bibliography>title-tag {display: block;}
+biblioentry>title-tag {display: block;}
+cite-title {display: block;}
+xreflabel {} 
+citation {}
+biblioentry volumenum, biblioentry pagenums, biblioentry date {}
+content-image {}
+table caption, thead, th {}
+table, td, th {}
+*/

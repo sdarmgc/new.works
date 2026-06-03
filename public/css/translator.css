@@ -1,0 +1,290 @@
+/*
+ *	translator.css
+ */
+
+/* 
+ * Main UI
+ */
+body, book {
+    display: block;
+    margin: 0;
+    width: 100%;
+    font-size: 1rem;
+    line-height: 150%;
+    color: #000;
+}
+
+.navbar {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.page-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    margin: 4rem 0 0;
+    padding: 1em;
+    background-color: #eee;
+}
+
+header, .header {
+    width: 100% !important;
+    margin: 0 0 5px;
+    padding: 0;
+    position:fixed;
+    top: 0;
+    z-index: 99;
+}
+
+.container {
+    max-width: none !important;
+}
+
+.app-title {
+    display:table-cell; vertical-align: middle; width:20%;font-size:1.5rem;text-align: center; padding: .5rem;
+}
+
+.app-title a {
+    color: #777; line-height: 120%;
+}
+
+.app-info {
+    display:block; font-size: .75em; 
+    border-top: 1px solid #aaa; border-bottom: 1px solid #aaa; padding: 2px 0.5em;
+}
+
+.app-info-item{
+    display: inline-block;
+    margin: 0 1em;
+}
+
+#cur-pos-indicator {
+    cursor: pointer;
+}
+
+#version-info, #cur-pos-indicator {
+}
+
+#page-label, #cur-page-no, #total-page-no {
+    margin: 0;
+}
+
+#cur-page-no {
+    height: 24px;
+    width: 30px;
+}
+
+#jump-to-parag-id {
+    height: 24px;
+    width: 80px;
+}
+
+#update-time {
+    color:#f00; float: right;
+}
+
+#update-time.synchronized {
+    color:#00f;
+}
+
+.error-count-block {
+    color: #f70; float: right;
+}
+
+.error-count-block span {
+    display: inline;
+}
+
+#error-count {
+    margin: 0 1em;
+}
+
+#waiting-icon, .waiting-icon { 
+  position: fixed; 
+  left:48%;
+  top:48%;
+  margin:auto; 
+  background: url(/css/images/loading.gif);
+  width:32px;
+  height:32px;
+  z-index:99999999;
+}
+
+.waiting-icon { 
+  position: absolute; 
+}
+
+#waiting-message { 
+  position: fixed; 
+  top: 30%;
+  min-width: 100%;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+  font-size: 2em; 
+  line-height: 150%;
+  text-align: center;
+  z-index: 9999999;
+}
+
+#waiting-message-box { 
+	position: fixed;
+    top: 0;
+    min-height: 100%;
+    min-width: 100%;
+    background: rgba(255,255,255,0.85);
+    z-index: 9999999;
+}
+
+.wait-message {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    color: #aaa;
+    background: #fff url("/css/images/progress_1.gif") no-repeat center top;
+    padding: 40px 0;
+}
+
+.editable {
+    display: flex !important;
+}
+
+.editable.odd {
+    background-color: #eeeeee;
+}
+
+.source-text,
+.target-text { 
+    flex: 1 1 48%;
+    margin: 1em;
+}
+
+.idLable {
+    flex: 1 1 4%;
+    padding: 1em;
+    text-align: center;
+    text-indent: 0;
+    font-size: 0.75rem;
+    font-weight: normal;
+    color: #000077;
+}
+
+.source-text {
+    cursor: auto;
+}
+
+.target-text {
+    cursor: pointer;
+}
+
+.target-text:hover {
+    background-color:rgb(252, 234, 213);
+}
+
+.target-text em {
+    font-weight: bold;
+}
+
+.editing {
+    width: 100%;
+    line-height: 150%;
+}
+
+.editing-parent {
+    text-indent:0;
+    background-color:bisque;
+}
+
+.pab-parag {
+    overflow: scroll;
+    cursor: auto;
+}
+
+.pab-parag .pab-matched {
+    color:red;
+    background-color:yellow;
+}
+
+.source-caution {border:rgb(236, 200, 0) solid 2px;}
+.source-mismatch {border:#f70 solid 1px;}
+.page-mismatch {border:#f70 double 3px;}
+c { /* style for caution in matched text */
+    font-weight: bolder;
+    text-decoration: underline;
+    color: #ea0082;
+}
+
+/*
+ * Dialog box
+ */
+.dialog {z-index:99;position:fixed;width:100%;height:100%;top:0;left:0;margin:0;padding:0;background-color:#fafafa;}
+.dialog-header {color:#fff;background-color:#000;padding:1em .5em;text-align:center;position:relative;display:block;}
+.dialog-header .title {font-size:1.5rem;;}
+.dialog-header .description {font-size:.75rem;margin:.25rem 0 0;}
+.dialog-body {overflow:auto;height:90%;padding:0 1em;}
+.subtitle {font-size:1.25em;text-align:center;background-color:#ccc;margin:.25em;padding:.25em;}
+.field-group {border:1px solid #aaa;}
+.field-item {padding:.5em;}
+.field-item.submit {position: fixed; top: 0px; right: 0px;}
+.field-group .field-item {display:inline-block;}
+.dialog .button {float:right; margin:1em}
+.inline {display:inline-block;}
+.hide {display:none;}
+
+.edit-book-name-dialog .field-group {display:table; border:none;}
+.edit-book-name-dialog .field-item {display:table-row;}
+.edit-book-name-dialog label, .edit-book-name-dialog input {display:table-cell;margin:.25em;}
+.edit-book-name-dialog form div.submit {display:block;}
+
+
+/* 
+ * SBL contents 
+ */
+.sbl lesson { border-top: 2px solid #777; margin: 2em 0 0; padding: 1em 0 0; }
+
+bible-source {color:#aaa;display:inline;}
+bible-verses { margin: 0 0 1em; padding: 0; display: block; }
+bible-verses h1, bible-verses h2, bible-verses h3, bible-verses h4, bible-verses h5 { font-size: 1em; }
+bible-ref { background-color: #ffe; font-size: 1em; font-weight: bold; margin: 0; }
+bible-text { background-color: #ffe; margin: .5em 0 0 1em; padding: 0 .5em 0; display: block;}
+bible-text span, verse { background-color: #ffe; font-size: 1em; font-weight: normal; }
+bible-text verse_no {font-weight: bold; position: relative; top: -0.5em; font-size: 80%;}
+bible-text p { background-color: #ffe; font-size: 1em; font-weight: normal; margin: 0; }
+bible-text p .note { display: none; }
+
+/*
+* 	STYLES FOR: Magazine contents (rmrh,ym)
+*/
+info { color: rgb(0, 9, 136)}
+volumn-no{ color:#777; font-size: 0.8em; font-weight: bold; }
+title-tag { font-weight: bold; color: #003b85;}
+.magazine book>title-tag { font-size: 1.2em; }
+.magazine book>subtitle { font-size: 1.5em; font-weight: bold; color: #003b85;}
+.magazine volumn-info { text-align: right; font-size: 1em; } 
+.magazine mediaobject {display: none;}
+keyword{ font-size: 0.8em; font-weight: bold; }
+author { color: #585858; font-weight: bold; font-style: italic; text-align:right;}
+info annotation { color: #585858; font-style:italic; text-align:right; }
+annotation, abstract, epigraph { font-weight: bold; color: green;}
+info-title { display:none }
+meta-info { display:none }
+.magazine para { text-align: justify; /*text-indent: 2em;*/ line-height: 150%;}
+.magazine para.caption-para {text-indent:0;}
+.cap { display: block; float: left; font-size:5em; font-weight: bold; line-height:100%; margin: 0 10px 0 0; }
+.bold { font-weight: bold; }
+.italic { font-style: italic; }
+article { border-top: 1px solid #FF7700;  margin: 2em 0 0}
+sect1, sect2, sect3 { margin: 0 0 1.5em; }
+article>title-tag { font-size: 2em; }
+sect1 title-tag {font-size: 1.5em; }
+sect2 title-tag {font-size: 1.2em; }
+sect3 title-tag {font-size: 1.0em; }
+bibliography>title-tag { font-size: 1.2em; }
+biblioentry>title-tag { font-weight: normal; }
+cite-title { color: #585858; font-weight: normal; font-style: italic;}
+xreflabel { font-size: 0.85em; vertical-align: super; } 
+citation { cursor:pointer; color:#00a; font-size: 0.9em; vertical-align: super; }
+biblioentry volumenum, biblioentry pagenums, biblioentry date { color: #585858; font-size: 0.85em; font-weight: normal; font-style: normal; }
+content-image { float: right; margin: 0.5em 0 1em 1em; }
+table caption, thead, th { font-weight: bold; }
+table, td, th { border: solid 1px black; padding: 0 0.5em !important; }
+

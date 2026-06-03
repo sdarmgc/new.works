@@ -1,0 +1,168 @@
+/*
+ * convert_sbl.css
+ */
+
+.panel_outter_wrapper {
+  font-family: arial;
+  font-size: 8pt
+}
+
+.panel {
+  padding: 0.5em;
+}
+
+.panel-container {
+  display: flex;
+  width: 100%;
+  height: 85vh;
+  background-color: #c0c0c0;
+}
+
+.panel-container * {
+  font-size: 1em;
+}
+
+.panel-lang-attr {
+  width: 320px;
+  flex-direction: column;
+  overflow-y: auto;
+  border: 1px solid #777;
+}
+
+.panel-contents {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+  border: 1px solid #777;
+}
+
+.panel-spliter {
+  /*width: 1px;*/
+  border: 1px solid #fff;
+  cursor: col-resize;
+}
+
+.panel-preview {
+  border: 1px solid #777;
+  min-width: 100px;
+  max-height: 100vh;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.panel-source-text {
+}
+
+.panel-convert-controls {
+}
+
+.panel-result {
+}
+
+.panel-error-check {
+}
+
+.panel-save  {
+}
+
+.panel-source-text, .panel-convert-controls, .panel-result, .panel-error-check, .panel-save {
+  border: 1px solid #ddd;
+}
+
+.panel-title {
+  padding: 0;
+}
+
+.footer {
+  overflow-y: auto;
+}
+
+.footer * {
+  font-size: .75rem;
+}
+
+input[type='button'] {
+  font-size: 0.8em;
+}
+
+input[type='submit'] {
+  font-size: 0.8em;
+}
+
+.panel-convert-controls {
+}
+
+.panel-result .panel-title {
+}
+
+.textarea-wrapper {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  min-width: 100px;
+  height: 130px;
+}
+
+#input_text-wrapper, #output_text-wrapper {
+  flex-grow: 1;
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lang_selector {
+  text-align: center
+}
+
+.pointover {
+  background-color: #D0F0FF }
+
+.textareaLinesNumbers {
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.textareaLinesNumbers textarea.linesContainer {
+  display: block;
+  border: none;
+  position: absolute;
+  overflow: hidden;
+  text-align: right;
+  padding-right: 0.2em;
+  z-index: 0;
+  resize: none;
+}
+
+.textareaLinesNumbers textarea:not(.linesContainer) {
+  z-index: 1;
+  position: relative;
+  resize: none;
+}
+
+.textareaLinesNumbers .ui-resizable-se {
+  bottom: 13px;
+  right: -2px;
+}
+
+.wrapper {
+/*  border:.2em solid #c0c0c0; */
+  display: inline-block;
+  position: relative;
+}
+
+#clear_title_button {
+  background-color: transparent;
+  border: none;
+  height: 1.7em;
+  /*position: absolute;
+  right: 0;
+  top: 0;*/
+}
+
+#quarterly_title {
+  width: 90%;
+  padding-right: 20px;
+}
