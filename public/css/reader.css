@@ -2,24 +2,21 @@
  *	reader.css
  */
 
- nav {
+ /* nav {
     position: fixed !important; 
     width: 100% !important;
     padding-top: 0;
     padding-bottom: 0;
-}
+} */
 
 .app-info {
-    position: fixed;
-    margin: 0.5em auto;
-    top: 35px;
-    right: 0;
-    border: none;
-    background-color: limegreen;
 }
 
 #cur-pos-indicator {
-    float: none;
+    background-color: bisque;
+    padding: 0.2em;
+    margin: 0 1em;
+    font-size: 0.8em;
 }
 
 #goto {

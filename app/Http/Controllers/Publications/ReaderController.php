@@ -4,12 +4,12 @@
  * ReaderController.php
  */
 
-namespace App\Http\Controllers\Frontend\Publications;
+namespace App\Http\Controllers\Publications;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Frontend\Publications\Translator\TransProperty;
-use App\Http\Controllers\Frontend\Publications\util\SblRtfHandler;
-use App\Http\Controllers\Frontend\Publications\util\RmrhRtfHandler;
+use App\Http\Controllers\Publications\Translator\TransProperty;
+use App\Http\Controllers\Publications\util\SblRtfHandler;
+use App\Http\Controllers\Publications\util\RmrhRtfHandler;
 use SdarmDL\BookLinkFinder\BookLinkFinder;
 use SdarmDL\BookServer\BookServer;
 
@@ -22,7 +22,23 @@ class ReaderController extends Controller
     protected $bibleVerseSameLine = true;
     protected $bibleRefSameLine = true;
 
-    private $domDocument = null;    
+    private $domDocument = null; 
+    
+    public $resourceServer;
+    public $dl_server;
+    
+    public function __construct()
+    {
+        if( (isset($_ENV['HOST_ENV']) && strpos($_ENV['HOST_ENV'], "docker") !== FALSE ) 
+            || strpos($_SERVER['SERVER_ADDR'], "127.0.0.1") !== FALSE ) { // local or docker host
+            $this->resourceServer = "https://dl.lo";
+            $this->dl_server = "https://dl.lo";
+        }
+        else {
+            $this->resourceServer = "https://dl.sdarm.org";
+            $this->dl_server = "https://dl.sdarm.org";
+        }
+    }
 
     /* Show book content with bible verses.
      *
@@ -58,11 +74,14 @@ class ReaderController extends Controller
             $settings["bibleVersions"] = $bibleVersions;
             // $bibleVersion = "KJV";
         }
-                            
-        return view('frontend.publications.reader.reader', 
-            ["book"=>$book, "lang"=>$lang, "year"=>$year, "issue"=>$issue
+        
+        return view('publications.reader.reader', [
+                    "book"=>$book, "lang"=>$lang, "year"=>$year, "issue"=>$issue
                     , "langList"=>(array)$langList
-                    , "bibleVersions"=>((array)$bibleVersions)]); 
+                    , "bibleVersions"=>((array)$bibleVersions)
+                    , "resourceServer"=>$this->resourceServer
+                    , "dl_server"=>$this->dl_server
+        ]);
     }
 
     
@@ -149,15 +168,15 @@ class ReaderController extends Controller
 
         if (isset($_GET['pab']) && $_GET['pab'] == 'true')
             if ($_GET['source'] == 'tr') {
-                $fileName = "../storage/app/publications/translator/data/{$this->book}pab{$this->year}_{$this->issue}_{$this->lang}.xml";
+                $fileName = "../storage/app/private/publications/translator/data/{$this->book}pab{$this->year}_{$this->issue}_{$this->lang}.xml";
             } else { //if ($_GET['source'] == 'ms') {
-                $fileName = "../storage/app/public/publications/manuscripts/{$this->book}pab{$this->year}_{$this->issue}_{$this->lang}.xml";
+                $fileName = "../storage/app/private/publications/manuscripts/{$this->book}pab{$this->year}_{$this->issue}_{$this->lang}.xml";
             } 
         else if (! empty($_GET['source']))
             if ($_GET['source'] == 'ms') {
-                $fileName = "../storage/app/public/publications/manuscripts/{$this->book}{$this->year}_{$this->issue}_{$this->lang}.xml";
+                $fileName = "../storage/app/private/publications/manuscripts/{$this->book}{$this->year}_{$this->issue}_{$this->lang}.xml";
             } else if ($_GET['source'] == 'tr') {
-                $fileName = "../storage/app/publications/translator/data/{$this->book}{$this->year}_{$this->issue}_{$this->lang}.xml";
+                $fileName = "../storage/app/private/publications/translator/data/{$this->book}{$this->year}_{$this->issue}_{$this->lang}.xml";
             } 
             else { //if ($_GET['source'] == 'dl') {
                 $fileName = "../../dl.sdarm.org/contents/publications/periodicals/{$this->book}/xml/{$this->book}{$this->year}_{$this->issue}_{$this->lang}.xml";
@@ -199,11 +218,16 @@ class ReaderController extends Controller
             $rtf = new RmrhRtfHandler;
         $jsVar .= "var rtfProp=" . json_encode(get_object_vars($rtf)) . ";\n";
 
-        return view('frontend.publications.reader.show', 
-            ["book"=>$book, "jsVar"=>$jsVar, "contents"=>$contents, 
-            "bibleVersion"=>$this->bVersion,
-            "bibleVerseSameLine"=>$this->bibleVerseSameLine,
-            "bibleRefSameLine"=>$this->bibleRefSameLine]
+        return view('publications.reader.show', [
+                "book"=>$book,
+                "jsVar"=>$jsVar,
+                "contents"=>$contents,
+                "bibleVersion"=>$this->bVersion,
+                "bibleVerseSameLine"=>$this->bibleVerseSameLine,
+                "bibleRefSameLine"=>$this->bibleRefSameLine,
+                "resourceServer"=>$this->resourceServer,
+                "dl_server"=>$this->dl_server
+            ]
         ); 
     }
     

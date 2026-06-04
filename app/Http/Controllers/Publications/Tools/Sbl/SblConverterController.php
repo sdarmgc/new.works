@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Frontend\Tools\Sbl;
+namespace App\Http\Controllers\Tools\Sbl;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
-use App\Http\Controllers\Frontend\Publications\util\SblRtfHandler;
+use App\Http\Controllers\Publications\util\SblRtfHandler;
 
 
 class SblConverterController extends Controller

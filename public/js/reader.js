@@ -83,7 +83,7 @@
     */
     prevScrollPos = 0;
     scrollPos = 0;
-    headerHeight = $(".navbar").height();
+    headerHeight = $(".header-fixed").height();
     $(window).scroll(function () {
         scrollPos = $(window).scrollTop();
         if (Math.abs(scrollPos - prevScrollPos) < 20)

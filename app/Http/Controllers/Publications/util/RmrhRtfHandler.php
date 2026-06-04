@@ -8,7 +8,7 @@
  * variable definitions for rtf converter
  */
 
-namespace App\Http\Controllers\Frontend\Publications\util;
+namespace App\Http\Controllers\Publications\util;
 
 
 class RmrhRtfHandler

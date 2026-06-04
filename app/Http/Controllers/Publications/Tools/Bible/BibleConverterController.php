@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend\Tools\Bible;
+namespace App\Http\Controllers\Tools\Bible;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

@@ -120,7 +120,7 @@ class ManuscriptController extends Controller
     public function storeManuscript(Request $request)
     {
         $validated = $request->validate([
-            'name'          => ['required', 'max:3'], 
+            'name'          => ['required', 'max:255'], 
         ]);
 
         $isNew = true;
@@ -130,7 +130,7 @@ class ManuscriptController extends Controller
             $manuscript = Manuscript::find($request->id);
             if (!$manuscript)
                 return redirect()->route('publications.manuscripts.index')
-                    ->withFlashSuccess(trans('Error: Invalid index. Data was not stored properly.'));
+                    ->banner(trans('Error: Invalid index. Data was not stored properly.'));
             $isNew = false;
         }
 
@@ -143,11 +143,11 @@ class ManuscriptController extends Controller
 
         if ($isNew) {
             return redirect()->route('publications.manuscripts.index')
-                ->withFlashSuccess(trans('New ' . '"' . $manuscript->category . '" ' . $validated['name'] . '" added.'));
+                ->banner(trans('New ' . '"' . $manuscript->category . '" ' . $validated['name'] . '" added.'));
         }
         else {
             return redirect()->route('publications.manuscripts.index')
-                ->withFlashSuccess(trans('"' . $manuscript->category . '" ' . $validated['name'] . '" updated.'));
+                ->banner(trans('"' . $manuscript->category . '" ' . $validated['name'] . '" updated.'));
         }
     }
 
@@ -167,7 +167,7 @@ class ManuscriptController extends Controller
             $item = ManuscriptItem::find($request->id);
             if (!$item)
                 return redirect()->route('publications.manuscripts.index')
-                    ->withFlashSuccess(trans('Error: Invalid index. Data was not stored properly.'));
+                    ->banner(trans('Error: Invalid index. Data was not stored properly.'));
             $isNew = false;
         }
 
@@ -190,11 +190,11 @@ class ManuscriptController extends Controller
 
         if ($isNew) {
             return redirect()->route('publications.manuscripts.index')
-                ->withFlashSuccess(trans('New ' . '"' . $request->name . '" added.'));
+                ->banner(trans('New ' . '"' . $request->name . '" added.'));
         }
         else {
             return redirect()->route('publications.manuscripts.index')
-                ->withFlashSuccess(trans('"' . $request->name . '" updated.'));
+                ->banner(trans('"' . $request->name . '" updated.'));
         }
     }
 
@@ -264,7 +264,7 @@ class ManuscriptController extends Controller
 
         // $manuscript->destroy($id);
         return redirect()->route('publications.manuscripts.index')
-            ->withFlashSuccess(trans($category . ' "' . $name . '" is deleted.'));
+            ->banner(trans($category . ' "' . $name . '" is deleted.'));
     }
     
     /**
@@ -285,7 +285,7 @@ class ManuscriptController extends Controller
         $item->delete();
 
         return redirect()->route('publications.manuscripts.index')
-            ->withFlashSuccess(trans("$name" . " is deleted."));
+            ->banner(trans("$name" . " is deleted."));
     }
 
 

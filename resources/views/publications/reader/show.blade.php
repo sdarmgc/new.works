@@ -1,29 +1,11 @@
-<?php
-    if( (isset($_ENV['HOST_ENV']) && strpos($_ENV['HOST_ENV'], "docker") !== FALSE ) 
-        || strpos($_SERVER['SERVER_ADDR'], "127.0.0.1") !== FALSE ) { // local or docker host
-        $resourceServer = "https://dl.lo";
-        $scriptServer = "https://dl.lo";
-        $dl_server = "https://dl.lo";
-    }
-    else {
-        $resourceServer = "https://dl.sdarm.org";
-        $scriptServer = "https://dl.sdarm.org";
-        $dl_server = "https://dl.sdarm.org";
-    }
-?>
-
-@extends('frontend.layouts.app')
-
 @push('after-styles')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <link href="{!! $resourceServer !!}/css/library.css?" rel="stylesheet">
     <link href="{!! $resourceServer !!}/css/sb.css?" rel="stylesheet">
     <link href="{!! $resourceServer !!}/css/sbl_core.css?" rel="stylesheet">
-    <!-- <link href="/css/translator.css?v={!! filemtime($_SERVER['DOCUMENT_ROOT'] . '/css/translator.css') !!}" rel="stylesheet"> -->
+    <!-- link href="/css/translator.css?v={!! filemtime($_SERVER['DOCUMENT_ROOT'] . '/css/translator.css') !!}" rel="stylesheet" -->
     <link href="/css/reader.css?v={!! filemtime($_SERVER['DOCUMENT_ROOT'] . '/css/reader.css') !!}" rel="stylesheet">
     <style>
-        .navbar { z-index: 999; }
-        
         @if ($bibleVerseSameLine)
             verse {
                 display: inline;
@@ -49,10 +31,9 @@
     <script>
         {!!$jsVar!!} 
     </script>
-
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="{!! $scriptServer !!}/js/bible_info.js?v=1.3"></script>
-    <script src="{!! $scriptServer !!}/js/sdarm_dl.js?v=1.4"></script>
+    <script src="{!! $dl_server !!}/js/bible_info.js?v=1.3"></script>
+    <script src="{!! $dl_server !!}/js/sdarm_dl.js?v=1.4"></script>
     <script src="/js/lang_property.js?v={!! filemtime($_SERVER['DOCUMENT_ROOT'] . '/js/lang_property.js') !!}"></script>
     <script src="/js/converter.js?v={!! filemtime($_SERVER['DOCUMENT_ROOT'] . '/js/converter.js') !!}"></script>
     <script src="/js/reader.js?v={!! filemtime($_SERVER['DOCUMENT_ROOT'] . '/js/reader.js') !!}"></script>
@@ -109,58 +90,100 @@
                 } 
             }); 
         });
-        
     </script>
 @endpush
 
-@push('custom-menu')
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">View</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
-                    <label class="dropdown-item menu-item">
-                        <input class="" id="menu-bible-verse-display" type="checkbox" value="" />
-                        Show Bible Verses In One Line
-                    </label>
-                    <label class="dropdown-item menu-item">
-                        <input class="" id="menu-ibid-full-name" type="checkbox" value="" />
-                        Show Ibid as Full Book Name
-                    </label>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
-                    <!-- a href="#" id="menu-xml" class="dropdown-item menu-item" title="Download XML format">XML</a -->
-                    <a href="#" id="menu-rtf" class="dropdown-item menu-item" title="Export rtf format">RTF</a>
-                    @if (Auth::user())
-                    <a href="#" id="menu-indesign-text-v2" class="dropdown-item menu-item" title="Export Indesign tag format V2">INDESIGN TAGGED TEXT V2</a>
-                    @endif
-                </div>
-            </li>
 
-            @hasanyrole('administrator|translator')     
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Property</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
-                    <a href="#" id="menu-edit-prop" class="dropdown-item menu-item" title="Edit language properties">EDIT PROPERTY</a>
-                    <a href="#" id="menu-edit-book-names" class="dropdown-item menu-item" title="Edit reference book names">EDIT BOOK NAMES</a>
+<x-app-layout>
+
+<div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-4">
+
+            <x-slot name="header">
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                    {{ __('Reader') }}
+                </h2>   
+                <div class="app-info flex items-center">
+                    <div class="hidden sm:flex sm:items-center sm:ms-6 mt-1">
+                        <div class="ms-3 relative">
+                            <x-dropdown align="left" width="60">
+                                <x-slot name="trigger">
+                                    <span class="inline-flex rounded-md">
+                                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
+                                            {{ __('View') }}
+                                            <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                            </svg>
+                                        </button>
+                                    </span>
+                                </x-slot>
+                                <x-slot name="content">
+                                    <div class="w-60">
+                                        <x-dropdown-link href="#">
+                                            <label class="dropdown-item menu-item">
+                                                <input class="" id="menu-bible-verse-display" type="checkbox" value="" />
+                                                {{ __('Show Bible Verses In One Line') }}
+                                            </label>
+                                        </x-dropdown-link>
+                                        <x-dropdown-link href="#">
+                                            <label class="dropdown-item menu-item">
+                                                <input class="" id="menu-ibid-full-name" type="checkbox" value="" />
+                                                {{ __('Show Ibid as Full Book Name') }}
+                                            </label>
+                                        </x-dropdown-link>
+                                    </div>
+                                </x-slot>
+                            </x-dropdown>
+                        </div>
+                    </div>
+                    <div class="hidden sm:flex sm:items-center sm:ms-6 mt-1">
+                        <div class="ms-3 relative">
+                            <x-dropdown align="left" width="60">
+                                <x-slot name="trigger">
+                                    <span class="inline-flex rounded-md">
+                                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
+                                            {{ __('Download') }}
+                                            <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                            </svg>
+                                        </button>
+                                    </span>
+                                </x-slot>
+                                <x-slot name="content">
+                                    <div class="w-60">
+                                        <x-dropdown-link href="#">
+                                            <span id="menu-rtf" class="dropdown-item menu-item" title="Export rtf format">
+                                                {{ __('RTF') }}
+                                            </span>
+                                        </x-dropdown-link>
+                                        @if (Auth::check())
+                                        <x-dropdown-link href="#">
+                                            <span id="menu-indesign-text-v2" class="dropdown-item menu-item" title="Export Indesign tag format V2">
+                                                {{ __('INDESIGN TAGGED TEXT V2') }}
+                                            </span>
+                                        </x-dropdown-link>
+                                        @endif
+                                    </div>
+                                </x-slot>
+                            </x-dropdown>
+                        </div>
+                    </div>
+
+                    <span id="cur-pos-indicator" class="cur-pos-indicator app-info-item">Current Scroll Position</span>
                 </div>
-            </li>
-            @endhasanyrole
-@endpush
+            </x-slot>
 
-@section('content')
-
-        <div class="app-info">
-            <span id="cur-pos-indicator" class="cur-pos-indicator app-info-item">Current Scroll Position</span>
-        </div>
-        <div class="contents-wrapper">
-            <!--div class="page-title">
-                SDARM Publication Reader
-            </div-->
-            <div id="contents" class="contents sdarm-dl {!! $book != 'sbl' ? 'magazine' : 'sbl' !!}" dl-server="{!! $dl_server !!}">
-                {!! $contents !!}
+            <div class="contents-wrapper">
+                <!--div class="page-title">
+                    SDARM Publication Reader
+                </div-->
+                <div id="contents" class="sdarm-dl {!! $book != 'sbl' ? 'magazine' : 'sbl' !!}" dl-server="{!! $dl_server !!}">
+                    {!! $contents !!}
+                </div>
             </div>
-        </div>
     
-@endsection
+        </div>
+    </div>
+</div>
+</x-app-layout>

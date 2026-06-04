@@ -74,11 +74,13 @@
 
 
     <div class="card-body">
-        @if (session('status'))
-            <div class="alert alert-success">
-                {{ session('status') }}
+        <x-validation-errors class="mb-4" />
+
+        @session('status')
+            <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+                {{ $value }}
             </div>
-        @endif
+        @endsession
 
         {{ html()->form('POST', route($form_url, ['id'=>$item->id]))
                 ->class('form-horizontal form-manuscript')

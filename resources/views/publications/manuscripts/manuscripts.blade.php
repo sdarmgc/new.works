@@ -67,7 +67,7 @@
                 $(this).text("Save");
             }
             else { // save
-                dataString = ckEditor.getData();
+                let dataString = ckEditor.getData();
                 fetch("/publications/manuscripts/update-message", {
                         method: "POST",
                         headers: {
@@ -107,7 +107,7 @@
                 $(this).text("Save");
             }
             else { // save
-                dataString = ckEditor.getData();
+                let dataString = ckEditor.getData();
                 if (dataString.length > 0) {
                     dataString = '<div class="message-board-notice" id="message-board-notice">' + ckEditor.getData() + '</div>';
                 }

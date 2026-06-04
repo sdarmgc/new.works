@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend\Publications\Translator;
+namespace App\Http\Controllers\Publications\Translator;
 
 use App;
 use App\Http\Controllers\Controller;
@@ -8,9 +8,9 @@ use Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Response;
-use App\Http\Controllers\Frontend\Publications\Translator\TransProperty;
-use App\Http\Controllers\Frontend\Publications\util\SblRtfHandler;
-use App\Http\Controllers\Frontend\Publications\util\RmrhRtfHandler;
+use App\Http\Controllers\Publications\Translator\TransProperty;
+use App\Http\Controllers\Publications\util\SblRtfHandler;
+use App\Http\Controllers\Publications\util\RmrhRtfHandler;
 use App\Models\Auth\User;
 use SdarmDL\BookLinkFinder\BookLinkFinder;
 use SdarmDL\BookServer\BookServer;

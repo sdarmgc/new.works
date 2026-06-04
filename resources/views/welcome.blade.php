@@ -62,14 +62,14 @@
                         Thank you for your willingness to assist in this vital ministry.
                     </p>
                     <p class="mb-2 text-[#706f6c]">
-                        Should you have any questions and/or concerns please feel free to <a href="{{ url('/contact') }}" class="text-[#1b1b18]">contact us.</a>
+                        Should you have any questions and/or concerns please feel free to <a href="{{ route('contact') }}" class="text-[#1b1b18]">contact us.</a>
                     </p>
                     <p class="mb-2 text-[#706f6c]">
                         If you are a translator and are accessing this website for the first time, <a href="{{ route('register') }}?mode=translator" class="text-[#1b1b18]">Register as a translator</a>.
                     </p>
                     <br />
                     <p class="mb-2 text-[#706f6c]">
-                        <a href="/publications/reader" class="text-[#1b1b18]">Read our publications</a>
+                        <a href="{{ route('publications.reader.index') }}" class="text-[#1b1b18]">Read our publications</a>
                     </p>
                 </div>
 

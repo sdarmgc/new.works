@@ -84,6 +84,8 @@ function nextTextElement(element) {   // element == '.editable' or '.has-text'
     */
 function toIndesignTagForSbl()
 {
+    var property = (langProp[settings?.lang]?langProp[settings.lang]:langProp);
+    
     var taggedText = "";
     var parag = document.getElementsByTagName('book').item(0).cloneNode(true).firstElementChild; //$("book :first-child");//getNextEditable($("book-title"));
     var lastTag = "";
@@ -125,8 +127,8 @@ function toIndesignTagForSbl()
         text = text.replaceAll(/</g, "\\<").replaceAll(/>/g, "\\>").replaceAll(/\&amp;/g, "&").replaceAll(/\&nbsp;/g, "\u00A0");  // escape special character
         
         if (tag == "paragraph" || tag == "key_note" || tag == "ref_parag") {// insert book reference italics
-            for (var i = 0; i < langProp[settings.lang].sbl_ref_pattern.length; i++) {
-                tmpText = text.replace(new RegExp(langProp[settings.lang].sbl_ref_pattern[i]), langProp[settings.lang].sbl_ref_replace[i]); // sbl_ref_replace == "$1<cstyle:reference_book>$2<cstyle:reference_page>$3"
+            for (var i = 0; i < property.sbl_ref_pattern.length; i++) {
+                tmpText = text.replace(new RegExp(property.sbl_ref_pattern[i]), property.sbl_ref_replace[i]); // sbl_ref_replace == "$1<cstyle:reference_book>$2<cstyle:reference_page>$3"
                 tmpText = tmpText.replace('—Ibid.', '—<cstyle:reference_book_ibid>Ibid.');  // The case that above code could not process.
                 if (tmpText != text) {
                     text = tmpText.replace('<cstyle:reference_book>Ibid.', '<cstyle:reference_book_ibid>Ibid.');
@@ -137,8 +139,8 @@ function toIndesignTagForSbl()
             text = text.replace(". ", ". \t");
         }
         else if (tag == "reading") { // insert book reference italics
-            for (var i = 0; i < langProp[settings.lang].sbl_reading_pattern.length; i++) {
-                tmpText = text.replace(new RegExp(langProp[settings.lang].sbl_reading_pattern[i]), langProp[settings.lang].sbl_reading_replace[i]);
+            for (var i = 0; i < property.sbl_reading_pattern.length; i++) {
+                tmpText = text.replace(new RegExp(property.sbl_reading_pattern[i]), property.sbl_reading_replace[i]);
                 if (tmpText != text) {
                     text = tmpText;
                     break
@@ -916,10 +918,6 @@ function book_link_find(text) {
                     
                     let evalStr = "replaceText = `" + linkTemplate + "`";
                     eval(evalStr.replaceAll(/\$(\d{1,2})/g, '${match[$1]}'));
-                    // if (is_numeric($newMatches['m'.strval(count($newMatches)-2)]) && is_numeric($newMatches['m'.strval(count($newMatches)-1)]) // Month to Number
-                    //         && langProp[settings.lang] && langProp[settings.lang]->monthToNumber) {
-                    //     $replaceText = str_replace(langProp[settings.lang]->monthToNumber[0], langProp[settings.lang]->monthToNumber[1], $replaceText);
-                    // }
                 }
             } catch (e) {
                 throw e;

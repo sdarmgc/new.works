@@ -4,12 +4,6 @@
     Author     : sean
 */
 
-body {
-  /*font-family: "Times New Roman", Times, serif;*/
-  background: #fff;
-  margin: 20px;
-}
-
 .message-board {
   line-height: 120%;
 }

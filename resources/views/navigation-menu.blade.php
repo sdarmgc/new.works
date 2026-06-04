@@ -11,14 +11,16 @@
                 </div>
 
                 <!-- Navigation Links -->
+                @auth
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
-                
+                @endauth
+
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="/publications/reader">
+                    <x-nav-link href="{{ route('publications.reader.index') }}">
                         {{ __('Reader') }}
                     </x-nav-link>
                 </div>
@@ -115,6 +117,10 @@
                     </div>
                 </div>
                 @endhasanyrole
+
+                <!-- Custom Menu Items -->
+                @yield('custom-menu')
+
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -125,7 +131,7 @@
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md">
                                     <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
-                                        {{ Auth::user()->currentTeam->name }}
+                                        {{ Auth::check() ? Auth::user()->currentTeam->name : 'Settings' }}
 
                                         <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
@@ -142,9 +148,11 @@
                                     </div>
 
                                     <!-- Team Settings -->
+                                    @auth
                                     <x-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                                         {{ __('Team Settings') }}
                                     </x-dropdown-link>
+                                    @endauth
 
                                     @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                         <x-dropdown-link href="{{ route('teams.create') }}">
@@ -176,12 +184,12 @@
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                 <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                    <img class="size-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                    <img class="size-8 rounded-full object-cover" src="{{ Auth::check() ? Auth::user()->profile_photo_url : '' }}" alt="{{ Auth::check() ? Auth::user()->name : '' }}" />
                                 </button>
                             @else
                                 <span class="inline-flex rounded-md">
                                     <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
-                                        {{ Auth::user()->name }}
+                                        {{ Auth::check() ? Auth::user()->name : 'Settings' }}
 
                                         <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -203,9 +211,11 @@
                                 {{ __('Manage Account') }}
                             </div>
 
+                            @auth
                             <x-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
+                            @endauth
 
                             <x-dropdown-link href="{{ route('contact') }}">
                                 {{ __('Contact') }}
@@ -230,6 +240,7 @@
                             <div class="border-t border-gray-200 dark:border-gray-600"></div>
 
                             <!-- Authentication -->
+                            @auth
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
 
@@ -238,6 +249,7 @@
                                     {{ __('Log Out') }}
                                 </x-dropdown-link>
                             </form>
+                            @endauth
                         </x-slot>
                     </x-dropdown>
                 </div>
@@ -257,24 +269,40 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+        @auth
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
+        @endauth
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('publications.reader.index') }}" :active="request()->routeIs('publications.reader.index')">
+                {{ __('Reader') }}
+            </x-responsive-nav-link>
+        </div>
+                
+        @hasanyrole('super-admin|administrator|executive|translator')
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('publications.manuscripts.index') }}" :active="request()->routeIs('publications.manuscripts.index')">
+                {{ __('Manuscripts') }}
+            </x-responsive-nav-link>
+        </div>
+        @endhasanyrole
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <div class="shrink-0 me-3">
-                        <img class="size-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                        <img class="size-10 rounded-full object-cover" src="{{ Auth::check() ? Auth::user()->profile_photo_url : '' }}" alt="{{ Auth::check() ? Auth::user()->name : '' }}" />
                     </div>
                 @endif
 
                 <div>
-                    <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::check() ? Auth::user()->name : 'Settings' }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ Auth::check() ? Auth::user()->email : '' }}</div>
                 </div>
             </div>
 
@@ -286,22 +314,24 @@
                 </div>
 
                 <!-- Account Management -->
+                @auth
                 <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+                @endauth
 
-                <x-dropdown-link href="{{ route('contact') }}">
+                <x-responsive-nav-link href="{{ route('contact') }}" :active="request()->routeIs('contact')">
                     {{ __('Contact') }}
-                </x-dropdown-link>
+                </x-responsive-nav-link>
 
                 @hasanyrole('super-admin|administrator|executive')
-                    <x-dropdown-link href="{{ url('/email/compose') }}">
+                <x-responsive-nav-link href="{{ route('email.compose') }}" :active="request()->routeIs('email.compose')">
                         {{ __('Compose Email') }}
-                    </x-dropdown-link>
+                </x-responsive-nav-link>
 
-                    <x-dropdown-link href="{{ url('/admin') }}">
-                        {{ __('Admin Dashboard') }}
-                    </x-dropdown-link>
+                <x-responsive-nav-link href="{{ url('/admin') }}" :active="request()->is('/admin')">
+                    {{ __('Admin Dashboard') }}
+                </x-responsive-nav-link>
                 @endhasanyrole
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -311,6 +341,7 @@
                 @endif
 
                 <!-- Authentication -->
+                @auth
                 <form method="POST" action="{{ route('logout') }}" x-data>
                     @csrf
 
@@ -319,6 +350,7 @@
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
+                @endauth
 
                 <!-- Team Management -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
