@@ -523,10 +523,9 @@ $(function ()
     $(window).on('beforeunload', function() {  // does not fired well !!!
         if ($("#editing").length) {
             endEditing($("#editing"));
-            return true;
         }
 
-        return false;
+        return true;
     });
 
 
@@ -971,7 +970,7 @@ $(function ()
     //error searching
     $("#next-error-btn").click(function () {
         var count = $(".source-warning").length;
-        var hearderHeight = $("header").outerHeight();
+        var hearderHeight = $(".header-fixed").outerHeight();
         var viewPos = Math.ceil($(window).scrollTop() + hearderHeight + 10);
 
         for (index = 0; index < count; index++) {
@@ -989,7 +988,7 @@ $(function ()
 
     $("#prev-error-btn").click(function () {
         var index = $(".source-warning").length - 1;
-        var hearderHeight = $("header").outerHeight();
+        var hearderHeight = $(".header-fixed").outerHeight();
         var viewPos = Math.ceil($(window).scrollTop() + hearderHeight + 10);
 
         for (; index > -1; index--) {
@@ -1041,7 +1040,7 @@ $(function ()
             }
             toText(false, true);
         }
-        else if (item == "menu-rtf-text" &&  settings.book.indexOf('pab')) {
+        else if (item == "menu-rtf" &&  settings.book.indexOf('pab')) {
             /*if (navigator.onLine)
                 saveDocument("0", false);    // force to commit to the server
             else {

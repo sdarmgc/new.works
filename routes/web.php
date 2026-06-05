@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\Publications\ManuscriptController;
-use App\Http\Controllers\Publications\Translator\TranslatorController;
+use App\Http\Controllers\Publications\TranslatorController;
 use App\Http\Controllers\Publications\ReaderController;
 use App\Http\Controllers\Publications\ManageController;
 
@@ -80,19 +80,19 @@ Route::middleware([
 
     // Translator
     Route::name('publications.translator.')->prefix('/publications/translator')->group(function () {
-            Route::get('publications/translator/{book}/{year}/{issue}', 
+            Route::get('/{book}/{year}/{issue}', 
                         [TranslatorController::class, 'translator'])->name("publications.translator");
-            Route::get('publications/translator/{book}/{year}/{issue}/{lang}/{s_lang}', 
+            Route::get('/{book}/{year}/{issue}/{lang}/{s_lang}', 
                     [TranslatorController::class, 'parallelTrans']);
-            Route::get('publications/translator/{book}/{year}/{issue}/{lang}/{s_lang}/dumpdata', 
+            Route::get('/{book}/{year}/{issue}/{lang}/{s_lang}/dumpdata', 
                     [TranslatorController::class, 'dumpData']);
-            Route::post('publications/translator/contents/{book}/{year}/{issue}/{lang}/{s_lang}', 
+            Route::post('/contents/{book}/{year}/{issue}/{lang}/{s_lang}', 
                     [TranslatorController::class, 'getTranslationContents']);
-            Route::post('publications/translator/save', 
+            Route::post('/save', 
                     [TranslatorController::class, 'save']);
-            Route::post('publications/translator/edit-property', 
+            Route::post('/edit-property', 
                     [TranslatorController::class, 'editProperty']);
-            Route::post('publications/translator/edit-book-name', 
+            Route::post('/edit-book-name', 
                     [TranslatorController::class, 'editBookName']);
     })->middleware(['role:administrator|executive|translator|pab']);
 

@@ -7,7 +7,7 @@
 namespace App\Http\Controllers\Publications;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Publications\Translator\TransProperty;
+use App\Services\Publication\TransProperty;
 use App\Http\Controllers\Publications\util\SblRtfHandler;
 use App\Http\Controllers\Publications\util\RmrhRtfHandler;
 use SdarmDL\BookLinkFinder\BookLinkFinder;

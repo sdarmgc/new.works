@@ -1,29 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\Publications\Translator;
+namespace App\Http\Controllers\Publications;
 
-use App;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 use Storage;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Response;
-use App\Http\Controllers\Publications\Translator\TransProperty;
-use App\Http\Controllers\Publications\util\SblRtfHandler;
-use App\Http\Controllers\Publications\util\RmrhRtfHandler;
-use App\Models\Auth\User;
+use Illuminate\Support\Facades\Response;
+use Auth;
+use App\Models\User;
+use App\Services\Publication\TransProperty;
+use App\Services\Publication\SblRtfHandler;
+use App\Services\Publication\RmrhRtfHandler;
 use SdarmDL\BookLinkFinder\BookLinkFinder;
 use SdarmDL\BookServer\BookServer;
 
-
 class TranslatorController extends Controller
 {
-    use App\Services\Publication\Utility;
+    use \App\Services\Publication\Utility;
 
     protected $book, $year, $issue, $lang, $s_lang;
     protected $file_log;
     protected $simpleXML;
     public $pabSubstitute = [];
+    
+    public $resourceServer;
+    public $dl_server;
 
     private $regexpChars = ["\\", "/", "?", "^", "$", "*", "+", "|", ".", "(", ")", "[", "]", "{", "}"];
     private $regexpCharsEsc = ["\\\\", "\/", "\?", "\^", "\$", "\*", "\+", "\|", "\.", "\(", "\)", "\[", "\]", "\{", "\}"];
@@ -42,6 +44,15 @@ class TranslatorController extends Controller
         if (App::environment('local'))
             $this->file_log = fopen('translator.log', 'w'); 
 
+        if( (isset($_ENV['HOST_ENV']) && strpos($_ENV['HOST_ENV'], "docker") !== FALSE ) 
+            || strpos($_SERVER['SERVER_ADDR'], "127.0.0.1") !== FALSE ) { // local or docker host
+            $this->resourceServer = "https://dl.lo";
+            $this->dl_server = "https://dl.lo";
+        }
+        else {
+            $this->resourceServer = "https://dl.sdarm.org";
+            $this->dl_server = "https://dl.sdarm.org";
+        }
     }
 
 
@@ -64,7 +75,7 @@ class TranslatorController extends Controller
      */
     public function translator($book, $year, $issue)
     {
-        $lang = Auth::user()->getTranslationLanguage()[0];
+        $lang = Auth::user()->languages()->pluck("name")->first();
         if ($lang == "" || $lang == "all") // administrator
             $lang = "en";
         $s_lang = "en";
@@ -88,7 +99,7 @@ class TranslatorController extends Controller
             if (!auth()->user()->hasRole("administrator") && !auth()->user()->hasRole("pab")) {
                 $title = "This page is for 'Publication Approval Board'.<br />You do not have access permission to access this page.</b>!";
                 $desc = "Please " . "Contact the "  
-                    . "<a href='" . route('frontend.contact', ['subject'=>"Translation Language Access"]) . "'>"
+                    . "<a href='" . route('contact', ['subject'=>"Translation Language Access"]) . "'>"
                     . "administrator</a> to request permission.";
                 return view("errors.general", ["title"=>$title, "description"=>$desc]);
             }
@@ -104,12 +115,12 @@ class TranslatorController extends Controller
             }
         } 
         else {
-            $langArray = Auth::user()->getTranslationLanguage();
+            $langArray = Auth::user()->languages()->pluck("iso_639_1")->all();
             if (array_search("all", $langArray) === false && array_search($lang, $langArray) === false) {
                 $langName = $xpathLang->evaluate("/iso_639/language[iso_639_1='{$lang}']/language_name")[0]->nodeValue;
                 $title = "You do not have access permission to translate to <b>$langName</b>!";
                 $desc = "Please " . "Contact the "  
-                    . "<a href='" . route('frontend.contact', ['subject'=>"Translation Language Access"]) . "'>"
+                    . "<a href='" . route('contact', ['subject'=>"Translation Language Access"]) . "'>"
                     . "administrator</a> to request permission.";
                 return view("errors.general", ["title"=>$title, "description"=>$desc]);
             }
@@ -182,11 +193,11 @@ class TranslatorController extends Controller
         $jsVar .= "var rtfProp=" . str_replace("    ", "", json_encode(get_object_vars($rtf))) . ";\n";
 
         // replace patterns for download
-        include_once(dirname(__FILE__) . "/../util/DownloadTextSubstitude.php");
+        include_once(app_path() . "/Services/Publication/DownloadTextSubstitude.php");
         $jsVar .= "var dnReplaceProp=" . json_encode($dnSubstitute) . ";\n";// defined in 'DownloadTextSubstitude.php'
 
         /* all available language */
-        $langCodes = Auth::user()->getTranslationLanguage();
+        $langCodes = Auth::user()->languages()->pluck("iso_639_1")->all();
         if (in_array('all', $langCodes)) {
             $languages = "<input type='text' name='lang' id='lang-select' value='{$lang}' />";
         }
@@ -208,9 +219,10 @@ class TranslatorController extends Controller
         
         $langProp="";
 
-        return view('frontend.publications.translator.parallel_trans', 
-            ["book"=>$book, "year"=>$year, "issue"=>$issue, "lang"=>$lang, "s_lang"=>$s_lang, 
-                "jsVar"=>$jsVar, "langProp"=>$langProp, "languages"=>$languages, "pageTitle"=>$pageTitle, "xmlText"=>""]); 
+        return view('publications.translator.parallel_trans', [
+                    "book"=>$book, "year"=>$year, "issue"=>$issue, "lang"=>$lang, "s_lang"=>$s_lang, 
+                    "jsVar"=>$jsVar, "langProp"=>$langProp, "languages"=>$languages, "pageTitle"=>$pageTitle, "xmlText"=>"",
+                    "resourceServer"=>$this->resourceServer, "dl_server"=>$this->dl_server]); 
     }
 
     /*
@@ -286,7 +298,7 @@ class TranslatorController extends Controller
 
         // prepare variables for traslation
         if (strpos($book, 'pab') !== false) {
-            include_once(dirname(__FILE__) . "/../util/PabTextSubstitute.php");
+            include_once(app_path() . "/Services/Publication/PabTextSubstitute.php");
             $this->pabSubstitute = $pabSubstitute; // defined in 'PabTextSubstitute.php'
         }
 
@@ -408,7 +420,7 @@ class TranslatorController extends Controller
             }
         }
         else {
-            $email = $userName = "Works";
+            $email = $userName = "WORKS";
         }
         $xmlText = '<translator source-date="' . $sourceDate . '" version="1.0" editor-email="' . $email . '" editor-name="' . $userName . '">' . $xmlText . '</translator>';
         // DEBUG 
@@ -1051,7 +1063,7 @@ class TranslatorController extends Controller
 
         $langProp = json_decode( file_get_contents("{$filePath}/{$fileName}") );
         
-        return view('frontend.publications.translator.edit_property', ["langProp"=>$langProp]); 
+        return view('publications.translator.edit_property', ["langProp"=>$langProp]); 
     }
 
 
@@ -1139,7 +1151,7 @@ class TranslatorController extends Controller
         // !!! Do Not Sort the list order. ERROR-CASE: Fundamentals of Christian Education, p. 531.
         // ksort($nameProp["book"]);
         
-        return view('frontend.publications.translator.edit_book_names', 
+        return view('publications.translator.edit_book_names', 
             ["lang_code"=>$lang_code, "nameProp"=>$nameProp]); 
     }
     
@@ -1153,7 +1165,7 @@ class TranslatorController extends Controller
         header('Content-Type: text/cache-manifest'); 
         //if (config('app.debug'))
         //    \Debugbar::disable();
-        return view('frontend.publications.translator.parallel_trans_manifest', 
+        return view('publications.translator.parallel_trans_manifest', 
             ["book"=>$book, "year"=>$year, "issue"=>$issue, "lang"=>$lang, "s_lang"=>$s_lang]);
     }
 
@@ -1164,7 +1176,7 @@ class TranslatorController extends Controller
      * @return 
      */
     public function dumpData($book, $year, $issue, $lang, $s_lang) {
-        return view('frontend.publications.translator.dump_data', 
+        return view('publications.translator.dump_data', 
             ["docId" => "translation_" . $book . $year . "_" . $issue . "_" . $lang]);
     }
 

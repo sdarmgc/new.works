@@ -23,8 +23,8 @@
     <body class="font-sans antialiased">
         <x-banner class="z-999" />
 
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <div class="header-fixed fixed w-full z-10">
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900 z-999">
+            <div class="header-fixed fixed w-full">
                 @livewire('navigation-menu')
 
                 <!-- Page Heading -->

@@ -170,14 +170,11 @@
                         </div>
                     </div>
 
-                    <span id="cur-pos-indicator" class="cur-pos-indicator app-info-item">Current Scroll Position</span>
+                    <div id="cur-pos-indicator" class="cur-pos-indicator app-info-item">Current Scroll Position</div>
                 </div>
             </x-slot>
 
             <div class="contents-wrapper">
-                <!--div class="page-title">
-                    SDARM Publication Reader
-                </div-->
                 <div id="contents" class="sdarm-dl {!! $book != 'sbl' ? 'magazine' : 'sbl' !!}" dl-server="{!! $dl_server !!}">
                     {!! $contents !!}
                 </div>

@@ -9,7 +9,7 @@
  * 
  */
 
-namespace App\Http\Controllers\Publications\Translator;
+namespace App\Services\Publication;
 
 use Storage;
 
