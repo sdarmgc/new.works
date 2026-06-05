@@ -1,6 +1,4 @@
-@section('title', 'Bible Converter for Numbered Text | SDARM WORKS')
 
-@extends('frontend.layouts.app')
 
 @push('after-styles')
         <style>
@@ -217,72 +215,81 @@
     </script>
 @endpush
 
-@section('content')
+<x-app-layout>
 
-<div>
-    <header></header>
-    <h3>Bible Converter for Numbered Text</h3>
-    <div class="info">
-        <label>Language Code:</label>
-        <input type="text" id="input-lang" name="lang" value="sr"></input>
-        <br />
-        <label>Title:</label>
-        <input type="text" id="input-title" name="title" value="Serbian Daničic-Karadžić Biblija"></input>
-        <br />
-        <label>Abbriviation:</label>
-        <input type="text" id="input-abbr" name="abbr" value="SRDKCY"></input>
-        <br />
-        <label>Chapter label:</label>
-        <input type="text" id="input-chapter" name="input-chapter" value="Поглавље"></input>
-    </div>
+<div class="py-12">
+    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-4">
 
-    <br />
-    <div class="source">
-        <label>Bible Source Text:</label>
-        <br />
-        <input type="file" id="source-file">
-        <br />
-        <textarea id="bible-text" name="bible-text" wrap="soft" rows="4" cols="50">
-1	1	1	У почетку створи Бог небо и землу.
-1	1	2	А земља беше без обличја и пуста, и беше тама над безданом; и дух Божји дизаше се над водом.
-1	1	3	И рече Бог: Нека буде светлост. И би светлост.
-1	1	4	И виде Бог светлост да је добра; и растави Бог светлост од таме.
-...
-        </textarea>
-        <br />
-        <label>Bible Abbr:</label>
-        <br />
-        <textarea id="bible-abbr" name="bible-abbr" wrap="soft" rows="4" cols="50">
-Past bible abbr table here!
-Ver	SRDKCY
-Gen	1 Мојсијева
-Exo	2 Мојсијева
-Lev	3 Мојсијева
-Num	4 Мојсијева
-Deut	5 Мојсијева
-...
-        </textarea>
-    </div>
-    <br />
-    <div class="convert">
-        <button type="button" id="button-convert" >Convert</button>
-    </div>
-    <br />
-    <div>
-        <label>Return Messages:</label>
-        <br />
-        <textarea id="message-textarea" name="message-textarea" rows="4" cols="50"></textarea>
-    </div>
-    <br />
-    <div>
-        <label>Result:</label>
-        <br />
-        <textarea id="result-textarea" name="result-textarea" rows="4" cols="50"></textarea>
-    </div>
-    <button type="button" id="button-do-validation" >Do Validation</button>
-    <button type="button" id="button-upload-xml" >Upload to Server</button>
-    <input type="checkbox" id="overwrite" name="overwrite"> <label for="overwrite">Overwrite Server file</label>
-</div>
+        <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Bible Converter') }}
+            </h2>
+        </x-slot>
 
-<div id="waiting-icon" class="hide"></div>
-@endsection
+        <div>
+            <header></header>
+            <h3>Bible Converter for Numbered Text</h3>
+            <div class="info">
+                <label>Language Code:</label>
+                <input type="text" id="input-lang" name="lang" value="sr"></input>
+                <br />
+                <label>Title:</label>
+                <input type="text" id="input-title" name="title" value="Serbian Daničic-Karadžić Biblija"></input>
+                <br />
+                <label>Abbriviation:</label>
+                <input type="text" id="input-abbr" name="abbr" value="SRDKCY"></input>
+                <br />
+                <label>Chapter label:</label>
+                <input type="text" id="input-chapter" name="input-chapter" value="Поглавље"></input>
+            </div>
+
+            <br />
+            <div class="source">
+                <label>Bible Source Text:</label>
+                <br />
+                <input type="file" id="source-file">
+                <br />
+                <textarea id="bible-text" name="bible-text" wrap="soft" rows="4" cols="50">
+        1	1	1	У почетку створи Бог небо и землу.
+        1	1	2	А земља беше без обличја и пуста, и беше тама над безданом; и дух Божји дизаше се над водом.
+        1	1	3	И рече Бог: Нека буде светлост. И би светлост.
+        1	1	4	И виде Бог светлост да је добра; и растави Бог светлост од таме.
+        ...
+                </textarea>
+                <br />
+                <label>Bible Abbr:</label>
+                <br />
+                <textarea id="bible-abbr" name="bible-abbr" wrap="soft" rows="4" cols="50">
+        Past bible abbr table here!
+        Ver	SRDKCY
+        Gen	1 Мојсијева
+        Exo	2 Мојсијева
+        Lev	3 Мојсијева
+        Num	4 Мојсијева
+        Deut	5 Мојсијева
+        ...
+                </textarea>
+            </div>
+            <br />
+            <div class="convert">
+                <button type="button" id="button-convert" >Convert</button>
+            </div>
+            <br />
+            <div>
+                <label>Return Messages:</label>
+                <br />
+                <textarea id="message-textarea" name="message-textarea" rows="4" cols="50"></textarea>
+            </div>
+            <br />
+            <div>
+                <label>Result:</label>
+                <br />
+                <textarea id="result-textarea" name="result-textarea" rows="4" cols="50"></textarea>
+            </div>
+            <button type="button" id="button-do-validation" >Do Validation</button>
+            <button type="button" id="button-upload-xml" >Upload to Server</button>
+            <input type="checkbox" id="overwrite" name="overwrite"> <label for="overwrite">Overwrite Server file</label>
+        </div>
+    </div>
+    <div id="waiting-icon" class="hide"></div>
+</x-app-layout>

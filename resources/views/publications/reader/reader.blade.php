@@ -4,6 +4,8 @@
 
 @push("after-scripts")
 <script src="{!! $dl_server !!}/js/bible_info.js?v=1.3"></script>
+<script src="{!! $dl_server !!}/js/sdarm_dl.js?v=1.4"></script>
+<script src="/js/reader.js?v={!! filemtime($_SERVER['DOCUMENT_ROOT'] . '/js/reader.js') !!}"></script>
 <script>
     $(document).ready(function(){
         $.ajaxSetup({

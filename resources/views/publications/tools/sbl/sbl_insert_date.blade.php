@@ -165,12 +165,8 @@
 	</table>
 </form>
 
-	<!-- Scripts -->
-	@stack('before-scripts')
-    {!! script(mix('js/manifest.js')) !!}
-	{!! script(mix('js/vendor.js')) !!}
-	{!! script(mix('js/frontend.js')) !!}
-	@stack('after-scripts')
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 	<script type="text/javascript" src="/js/jquery.calendars.js"></script>
 	<script type="text/javascript" src="/js/jquery.calendars.ethiopian.js"></script>

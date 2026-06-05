@@ -7,6 +7,7 @@
 		<meta name="version" content="1.0">
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 
+		<link rel="stylesheet" type="text/css" href="/css/tln.min.css"/>
 		<link href="https://dl.sdarm.org/css/article.css" rel="stylesheet">
 		<link href="/css/article_converter.css?v={!! filemtime($_SERVER['DOCUMENT_ROOT'] . '/css/article_converter.css') !!}" rel="stylesheet">
 	</head>
@@ -148,14 +149,7 @@
 			</div>
 		</div>
 
-        <!-- Scripts -->
-        @stack('before-scripts')
-        {!! script(mix('js/manifest.js')) !!}
-        {!! script(mix('js/vendor.js')) !!}
-        {!! script(mix('js/frontend.js')) !!}
-        @stack('after-scripts')
-
-		<link rel="stylesheet" type="text/css" href="/css/tln.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 		<script type="text/javascript" src="/js/tln.min.js"></script>
 		<script type="text/javascript" src="/js/converter.js?v={!! filemtime($_SERVER['DOCUMENT_ROOT'] . '/js/converter.js') !!}"></script>
         <script type="text/javascript" src="/js/rmrh/rmrh_lang_pattern.js?v={!! filemtime($_SERVER['DOCUMENT_ROOT'] . '/js/rmrh/rmrh_lang_pattern.js') !!}"></script>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Tools\Bible;
+namespace App\Http\Controllers\Publications\Tools\Bible;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -27,7 +27,7 @@ class XmlBibleConverterController extends Controller
      */
     public function index()
     {
-        return view('frontend.tools.bible.xml_bible_converter', []);
+        return view('publications.tools.bible.xml_bible_converter', []);
     }
 
     /**

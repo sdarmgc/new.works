@@ -8,8 +8,8 @@ namespace App\Http\Controllers\Publications;
 
 use App\Http\Controllers\Controller;
 use App\Services\Publication\TransProperty;
-use App\Http\Controllers\Publications\util\SblRtfHandler;
-use App\Http\Controllers\Publications\util\RmrhRtfHandler;
+use App\Services\Publication\SblRtfHandler;
+use App\Services\Publication\RmrhRtfHandler;
 use SdarmDL\BookLinkFinder\BookLinkFinder;
 use SdarmDL\BookServer\BookServer;
 
@@ -208,7 +208,7 @@ class ReaderController extends Controller
         $transProp->init($lang, $lang);
         $jsVar .= "var langProp=" . json_encode($transProp->langProp) . ";\n";
         // replace patterns for download
-        include_once(dirname(__FILE__) . "/util/DownloadTextSubstitude.php");
+        include_once(app_path() . "/Services/Publication/DownloadTextSubstitude.php");
         $jsVar .= "var dnReplaceProp=" . json_encode($dnSubstitute) . ";\n";// defined in 'DownloadTextSubstitude.php'
 
 

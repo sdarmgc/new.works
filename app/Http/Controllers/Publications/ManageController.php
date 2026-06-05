@@ -19,7 +19,7 @@ class ManageController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //
     }
 
 
@@ -36,7 +36,7 @@ class ManageController extends Controller
         $messageBody = $updator->updateLibrary();
         $messageBody = str_replace("\n", "<br />", $messageBody);
 
-        return view('frontend.message', ["messageTitle" => $messageTitle, "messageBody" => $messageBody]);
+        return view('message', ["messageTitle" => $messageTitle, "messageBody" => $messageBody]);
     }
 
 
@@ -51,7 +51,7 @@ class ManageController extends Controller
         $messageBody = BookUpdator::rebuildPubDb();
         $messageBody = str_replace("\n", "<br />", $messageBody);
 
-        return view('frontend.message', ["messageTitle" => $messageTitle, "messageBody" => $messageBody]);
+        return view('message', ["messageTitle" => $messageTitle, "messageBody" => $messageBody]);
     }
 
 
@@ -65,6 +65,6 @@ class ManageController extends Controller
         $messageTitle = "Rebuild Study Bible DB(XML DB)";
         $messageBody = BookUpdator::rebuildSbDb();
         $messageBody = str_replace("\n", "<br />", $messageBody);
-        return view('frontend.message', ["messageTitle" => $messageTitle, "messageBody" => $messageBody]);
+        return view('message', ["messageTitle" => $messageTitle, "messageBody" => $messageBody]);
     }
 }

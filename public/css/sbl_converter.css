@@ -4,7 +4,7 @@
 
 .panel_outter_wrapper {
   font-family: arial;
-  font-size: 8pt
+  font-size: 1em;
 }
 
 .panel {
@@ -19,7 +19,6 @@
 }
 
 .panel-container * {
-  font-size: 1em;
 }
 
 .panel-lang-attr {

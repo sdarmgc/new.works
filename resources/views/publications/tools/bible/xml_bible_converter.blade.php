@@ -1,6 +1,4 @@
-@section('title', 'XML Bible Converter | SDARM WORKS')
 
-@extends('frontend.layouts.app')
 
 @push('after-styles')
         <style>
@@ -209,76 +207,86 @@
     </script>
 @endpush
 
-@section('content')
+<x-app-layout>
 
-<div>
-    <header></header>
-    <h3>XML Bible Converteraaa</h3>
-    <div class="info">
-        <label>Language Code:</label>
-        <input type="text" id="input-lang" name="lang" value="sr"></input>
-        <br />
-        <label>Title:</label>
-        <input type="text" id="input-title" name="title" value="Serbian Cyrillic Version == Same Translators as Latin Version == 1865 Public Domain == Daničić-Karadžić"></input>
-        <br />
-        <label>Abbriviation:</label>
-        <input type="text" id="input-abbr" name="abbr" value="SCY"></input>
-        <br />
-        <label>Chapter label:</label>
-        <input type="text" id="input-chapter" name="input-chapter" value="Поглавље"></input>
+    <div class="py-12">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-4">
+
+            <x-slot name="header">
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                    {{ __('XML Bible Converter') }}
+                </h2> 
+            </x-slot>
+            <div>
+                <header></header>
+                <h3>XML Bible Converteraaa</h3>
+                <div class="info">
+                    <label>Language Code:</label>
+                    <input type="text" id="input-lang" name="lang" value="sr"></input>
+                    <br />
+                    <label>Title:</label>
+                    <input type="text" id="input-title" name="title" value="Serbian Cyrillic Version == Same Translators as Latin Version == 1865 Public Domain == Daničić-Karadžić"></input>
+                    <br />
+                    <label>Abbriviation:</label>
+                    <input type="text" id="input-abbr" name="abbr" value="SCY"></input>
+                    <br />
+                    <label>Chapter label:</label>
+                    <input type="text" id="input-chapter" name="input-chapter" value="Поглавље"></input>
+                </div>
+
+                <br />
+                <div class="source">
+                    <label>Bible Source Text:</label>
+                    <br />
+                    <input type="file" id="source-file">
+                    <br />
+                    <textarea id="bible-text" name="bible-text" wrap="soft" rows="4" cols="50">
+            &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+            &lt;bible translation="Serbian Cyrillic Version == Same Translators as Latin Version == 1865 Public Domain == Daničić-Karadžić"&gt;
+            &lt;testament name="Old"&gt;
+                &lt;book number="1"&gt;
+                &lt;chapter number="1"&gt;
+                    &lt;verse number="1"&gt;У почетку створи Бог небо и земљу.&lt;/verse&gt;
+                    &lt;verse number="2"&gt;А земља беше без обличја и пуста, и беше тама над безданом; и дух Божји дизаше се над водом.&lt;/verse&gt;
+                    &lt;verse number="3"&gt;И рече Бог: Нека буде светлост. И би светлост.&lt;/verse&gt;
+            ...
+                    </textarea>
+                    <br />
+                    <label>Bible Abbr:</label>
+                    <br />
+                    <textarea id="bible-abbr" name="bible-abbr" wrap="soft" rows="4" cols="50">
+            Past bible abbr table here!
+            Ver	SRDKCY
+            Gen	1 Мојсијева
+            Exo	2 Мојсијева
+            Lev	3 Мојсијева
+            Num	4 Мојсијева
+            Deut	5 Мојсијева
+            ...
+                    </textarea>
+                </div>
+                <br />
+                <div class="convert">
+                    <button type="button" id="button-convert" >Convert</button>
+                </div>
+                <br />
+                <div>
+                    <label>Return Messages:</label>
+                    <br />
+                    <textarea id="message-textarea" name="message-textarea" rows="4" cols="50"></textarea>
+                </div>
+                <br />
+                <div>
+                    <label>Result:</label>
+                    <br />
+                    <textarea id="result-textarea" name="result-textarea" rows="4" cols="50"></textarea>
+                </div>
+                <button type="button" id="button-do-validation" >Do Validation</button>
+                <button type="button" id="button-upload-xml" >Upload to Server</button>
+                <input type="checkbox" id="overwrite" name="overwrite"> <label for="overwrite">Overwrite Server file</label>
+            </div>
+        </div>
     </div>
 
-    <br />
-    <div class="source">
-        <label>Bible Source Text:</label>
-        <br />
-        <input type="file" id="source-file">
-        <br />
-        <textarea id="bible-text" name="bible-text" wrap="soft" rows="4" cols="50">
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;bible translation="Serbian Cyrillic Version == Same Translators as Latin Version == 1865 Public Domain == Daničić-Karadžić"&gt;
-  &lt;testament name="Old"&gt;
-    &lt;book number="1"&gt;
-      &lt;chapter number="1"&gt;
-        &lt;verse number="1"&gt;У почетку створи Бог небо и земљу.&lt;/verse&gt;
-        &lt;verse number="2"&gt;А земља беше без обличја и пуста, и беше тама над безданом; и дух Божји дизаше се над водом.&lt;/verse&gt;
-        &lt;verse number="3"&gt;И рече Бог: Нека буде светлост. И би светлост.&lt;/verse&gt;
-...
-        </textarea>
-        <br />
-        <label>Bible Abbr:</label>
-        <br />
-        <textarea id="bible-abbr" name="bible-abbr" wrap="soft" rows="4" cols="50">
-Past bible abbr table here!
-Ver	SRDKCY
-Gen	1 Мојсијева
-Exo	2 Мојсијева
-Lev	3 Мојсијева
-Num	4 Мојсијева
-Deut	5 Мојсијева
-...
-        </textarea>
-    </div>
-    <br />
-    <div class="convert">
-        <button type="button" id="button-convert" >Convert</button>
-    </div>
-    <br />
-    <div>
-        <label>Return Messages:</label>
-        <br />
-        <textarea id="message-textarea" name="message-textarea" rows="4" cols="50"></textarea>
-    </div>
-    <br />
-    <div>
-        <label>Result:</label>
-        <br />
-        <textarea id="result-textarea" name="result-textarea" rows="4" cols="50"></textarea>
-    </div>
-    <button type="button" id="button-do-validation" >Do Validation</button>
-    <button type="button" id="button-upload-xml" >Upload to Server</button>
-    <input type="checkbox" id="overwrite" name="overwrite"> <label for="overwrite">Overwrite Server file</label>
-</div>
-
-<div id="waiting-icon" class="hide"></div>
-@endsection
+    <div id="waiting-icon" class="hide"></div>
+</x-app-layout>

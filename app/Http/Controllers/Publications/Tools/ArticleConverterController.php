@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Tools;
+namespace App\Http\Controllers\Publications\Tools;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -100,7 +100,7 @@ class ArticleConverterController extends Controller
      */
     public function index()
     {
-        return view('frontend.tools.article_converter', []);
+        return view('publications.tools.article_converter', []);
     }
 
     /**
@@ -241,7 +241,7 @@ class ArticleConverterController extends Controller
 
         $paths[5] = '0';
         $toc = theme_periodical($paths, $xml, "/tools/article-converter/preview/", "");
-        return view('frontend.tools.article_preview', 
+        return view('publications.tools.article_preview', 
                     ["book" => $book, "lang" => $lang, "year" => $year, "issue" => $issue, "article" => $article
                         , "subtitle" => $subtitle, "toc" => $toc, "contents" => $contents]);
     }

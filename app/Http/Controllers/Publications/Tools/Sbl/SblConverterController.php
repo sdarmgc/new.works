@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Tools\Sbl;
+namespace App\Http\Controllers\Publications\Tools\Sbl;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
-use App\Http\Controllers\Publications\util\SblRtfHandler;
+use App\Services\Publication\SblRtfHandler;
 
 
 class SblConverterController extends Controller
@@ -36,7 +36,7 @@ class SblConverterController extends Controller
     public function index()
     {
         // replace patterns for download
-        include_once(dirname(__FILE__) . "/../../Publications/util/DownloadTextSubstitude.php");
+        include_once(app_path() . "/Services/Publication/DownloadTextSubstitude.php");
         $jsVar = "var dnReplaceProp=" . json_encode($dnSubstitute) . ";\n";// defined in 'DownloadTextSubstitude.php'
         
         $jsVar .= "var langProp=" . json_encode($this->langProp) . ";\n";
@@ -44,7 +44,7 @@ class SblConverterController extends Controller
         $rtf = new SblRtfHandler;
         $jsVar .= "var rtfProp=" . str_replace("    ", "", json_encode(get_object_vars($rtf))) . ";\n";
         
-        return view('frontend.tools.sbl.sbl_converter', ["jsVar"=>$jsVar]);
+        return view('publications.tools.sbl.sbl_converter', ["jsVar"=>$jsVar]);
     }
 
     /**
@@ -54,7 +54,7 @@ class SblConverterController extends Controller
      */
     public function insertDate()
     {
-        return view('frontend.tools.sbl.sbl_insert_date', []);
+        return view('publications.tools.sbl.sbl_insert_date', []);
     }
 
     /**

@@ -9,6 +9,10 @@ use App\Http\Controllers\Publications\ManuscriptController;
 use App\Http\Controllers\Publications\TranslatorController;
 use App\Http\Controllers\Publications\ReaderController;
 use App\Http\Controllers\Publications\ManageController;
+use App\Http\Controllers\Publications\Tools\ArticleConverterController;
+use App\Http\Controllers\Publications\Tools\Sbl\SblConverterController;
+use App\Http\Controllers\Publications\Tools\Bible\BibleConverterController;
+use App\Http\Controllers\Publications\Tools\Bible\XmlBibleConverterController;
 
 
 Route::get('/', function () {
@@ -105,6 +109,30 @@ Route::middleware([
 
         // Authoring
         // Route::get('publications/composer/{book}/{lang}/{year}/{issue}', [ReaderController::class, 'composer'])->name('publications.reader.composer');
+    });
+
+    // Tools
+    Route::group(['middleware' => ['role:administrator']], function () {
+        // Article converter
+        Route::get('tools/article-converter', [ArticleConverterController::class, 'index'])->name('tools.article-converter.index');
+        Route::post('tools/article-converter/upload', [ArticleConverterController::class, 'upload'])->name('tools.article-converter.upload');
+        Route::post('tools/article-converter/validate', [ArticleConverterController::class, 'validateXml'])->name('tools.article-converter.validateXml');
+        Route::get('tools/article-converter/preview/{book}/{lang}/{year}/{issue}/{article}', [ArticleConverterController::class, 'preview'])->name('tools.article-converter.preview');
+    });
+    Route::group(['middleware' => ['role:administrator']], function () {
+        // SBL converter
+        Route::get('tools/sbl/sbl-converter', [SblConverterController::class, 'index'])->name('tools.sbl.sbl-converter');
+        Route::get('tools/sbl/insert-date', [SblConverterController::class, 'insertDate'])->name('tools.sbl.insert-date');
+        Route::post('tools/sbl/sbl-converter/upload', [SblConverterController::class, 'upload'])->name('tools.sbl.sbl-converter.upload');
+        Route::post('tools/sbl/sbl-converter/validate', [SblConverterController::class, 'validateXml'])->name('tools.sbl.sbl-converter.validateXml');
+        // bible converter
+        Route::get('tools/bible/bible-converter', [BibleConverterController::class, 'index'])->name('tools.bible.bible-converter');
+        Route::post('tools/bible/bible-converter/upload', [BibleConverterController::class, 'upload'])->name('tools.bible.bible-converter.upload');
+        Route::post('tools/bible/bible-converter/validate', [BibleConverterController::class, 'validateXml'])->name('tools.bible.bible-converter.validateXml');
+
+        Route::get('tools/bible/xml-bible-converter', [XmlBibleConverterController::class, 'index'])->name('tools.bible.xml-bible-converter');
+        Route::post('tools/bible/xml-bible-converter/upload', [XmlBibleConverterController::class, 'upload'])->name('tools.bible.xml-bible-converter.upload');
+        Route::post('tools/bible/xml-bible-converter/validate', [XmlBibleConverterController::class, 'validateXml'])->name('tools.bible.xml-bible-converter.validateXml');
     });
 
 });
