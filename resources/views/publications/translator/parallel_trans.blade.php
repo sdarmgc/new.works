@@ -179,7 +179,7 @@
             <div class="container">
                 <div class="wait-message">Please wait while the translation content loads.</div>
                 <div id="contents" 
-                        class="contents sdarm-dl {!! $book != 'sbl' ? 'magazine' : 'sbl' !!} {!! $book == 'sblpab' ? 'sblpab' : '' !!}" 
+                        class="sdarm-dl {!! $book != 'sbl' ? 'magazine' : 'sbl' !!} {!! $book == 'sblpab' ? 'sblpab' : '' !!}" 
                         dl-server="{!! $dl_server !!}"
                         langEGW={!! $lang !!}
                         sourcePage="page-original"

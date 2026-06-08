@@ -75,7 +75,7 @@ class TranslatorController extends Controller
      */
     public function translator($book, $year, $issue)
     {
-        $lang = Auth::user()->languages()->pluck("name")->first();
+        $lang = Auth::user()->languages()->pluck("iso_639_1")->first();
         if ($lang == "" || $lang == "all") // administrator
             $lang = "en";
         $s_lang = "en";
@@ -721,7 +721,8 @@ class TranslatorController extends Controller
                 if (!in_array('KJV', $sourcePath)) {
                     $t = $bookServer->get_data($sourcePath, 'content', 'X', ''); 
                     if (!is_array($t)) {
-                        $refLinkText .= $t;
+                        $refLinkText .= str_replace("<a id='captcha-anchor' name='captcha-anchor' class='anchor'></a>", "", $t);
+                        
                     }
                     else {
                         $refLinkText = '[No data!]';

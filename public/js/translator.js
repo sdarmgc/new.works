@@ -331,7 +331,7 @@ function initContents(content) {
                 scrollTop: ($("#editing").offset().top - $("header").outerHeight())
             }, 500);
             $("#editing").focus();
-        } else if (envStore.data.currentID != "0") {
+        } else if (envStore.data.currentID != "0" && $('#' + envStore.data.currentID).length > 0) {
             $("html, body").animate({
                 scrollTop: ($('#' + envStore.data.currentID).offset().top - $("header").outerHeight()*2)
             }, 500);
