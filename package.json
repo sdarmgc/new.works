@@ -5,7 +5,8 @@
     "scripts": {
         "build": "vite build",
         "watch": "vite build --watch",
-        "dev": "vite --host"
+        "dev": "vite --host",
+        "build-ac": "vite build --config vite.article_converter.config.js"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.7",
