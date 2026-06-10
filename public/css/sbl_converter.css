@@ -22,7 +22,6 @@
 }
 
 .panel-lang-attr {
-  width: 320px;
   flex-direction: column;
   overflow-y: auto;
   border: 1px solid #777;
@@ -37,9 +36,10 @@
 }
 
 .panel-spliter {
-  /*width: 1px;*/
-  border: 1px solid #fff;
+  width: 8px;
+  border: 2px solid #eee;
   cursor: col-resize;
+  background-color: #ccc;
 }
 
 .panel-preview {
@@ -81,12 +81,18 @@
   font-size: .75rem;
 }
 
+input {
+  padding: 0.2em 0.5em !important;
+}
+
 input[type='button'] {
   font-size: 0.8em;
+  cursor: pointer;
 }
 
 input[type='submit'] {
   font-size: 0.8em;
+  cursor: pointer;
 }
 
 .panel-convert-controls {
