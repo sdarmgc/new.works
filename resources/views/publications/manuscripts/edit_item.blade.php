@@ -7,7 +7,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Edit Item') }}
+            {{ $title }}
         </h2>
     </x-slot>
 
@@ -17,6 +17,7 @@
 
 @push("after-scripts")
     <script>
+        var manuscriptName = '{{ $manuscriptName }}';
         $(document).ready(function() {
             $("form").submit(function(event) {
                 console.log("Submitting form...");
@@ -34,23 +35,64 @@
             });
             $('#type').on('change', function() {
                 var type = $(this).val();
-                if (type == 2) {
+                if (type == 1) {
+                    // url required
+                    $('.form-control[name="file"]').prop('required',false);
+                    $('.form-group-file').css('display','none');
+                    $('.form-control[name="url"]').prop('required',false);
+                    $('.form-group-url').css('display','none');
+                    $('.form-group-size').css('display','none');
+                }
+                else if (type == 2) {
                     // url required
                     $('.form-control[name="file"]').prop('required',false);
                     $('.form-group-file').css('display','none');
                     $('.form-control[name="url"]').prop('required',true);
-                    $('.form-group-url').css('display','flex');
+                    $('.form-group-url').css('display','block');
                     $('.form-group-size').css('display','none');
-                } else {
+                }
+                else {
                     // neither required
                     $('.form-control[name="file"]').prop('required',true);
-                    $('.form-group-file').css('display','flex');
+                    $('.form-group-file').css('display','block');
                     $('.form-control[name="url"]').prop('required',false);
                     $('.form-group-url').css('display','none');
-                    $('.form-group-size').css('display','flex');
+                }
+                switch (parseInt(type)) {
+                    case 1:
+                        $('#name').val('Translate ' + manuscriptName);
+                        $('#description').val('Translation App');
+                        break;
+                    case 2:
+                        $('#name').val(manuscriptName + ' InDesign Package');
+                        $('#description').val('Link to InDesign Package');
+                        break;
+                    case 3:
+                        $('#name').val(manuscriptName + ' Word File');
+                        $('#description').val('Formatted Text File');
+                        $('#native-file').prop('accept', '.rtf,.doc,.docx');
+                        break;
+                    case 4:
+                        $('#name').val(manuscriptName + ' Web PDF');
+                        $('#description').val('Web Optimized PDF File for viewing');
+                        $('#native-file').prop('accept', '.pdf');
+                        break;
+                    case 8:
+                        $('#name').val(manuscriptName + ' Print PDF');
+                        $('#description').val('High Quality PDF file for Printing');
+                        $('#native-file').prop('accept', '.pdf');
+                        break;
+                    case 5:
+                        $('#name').val(manuscriptName + ' Images');
+                        $('#description').val('Cover and other images');
+                        $('#native-file').prop('accept', '.png,.jpeg,.jpg,.tiff');
+                        break;
+                    default:
+                        $('#name').val('');
+                        $('#description').val('');
                 }
             });
-            if ($('#size').val() > 0) {
+            if ($('#size').text().trim() != '' && $('#size').text().trim() != '0') {
                 $('.form-group-size').css('display','flex');
             } else {
                 $('.form-group-size').css('display','none');
@@ -67,7 +109,9 @@
                 // on Create
                 $('.form-group-url').css('display','none');
             }
-
+            // $('#type').val('1');
+            $('#name').val('Translate ' + manuscriptName);
+            $('#description').val('Translation App');
         });
     </script>
 @endpush
@@ -94,12 +138,13 @@
                 {{ html()->label(@('Type'))->for('type')->class('col-md-3 control-label') }}
                 <div class="col-md-9">
                     {{ html()->select('type', 
-                        [1=>'Works Translator', 
-                        2=>'Html Link', 
+                        [1=>'Works Translation App', 
+                        2=>'Link', 
                         3=>'Text File', 
-                        4=>'PDF File', 
+                        4=>'Web Optimized PDF File',
+                        8=>'HQ Print PDF File',
                         5=>'Image File', 
-                        6=>'Zipped File', 
+                        //6=>'Zipped File', 
                         7=>'Other File'], $item->type)->class('form-control block mt-1 w-full')->required() }}
                 </div><!--col-md-9-->
             </div><!--form-group-->
@@ -107,42 +152,47 @@
             <div class="mt-4 form-group form-group-name">
                 {{ html()->label(@('Item Name'))->for('name')->class('col-md-3 control-label') }}
                 <div class="col-md-9">
-                    {{ html()->text('name', $item->name)->class('form-control block mt-1 w-full')->required() }}
+                    {{ html()->text('name', $item->name)->id('name')->class('form-control block mt-1 w-full')->required() }}
                 </div><!--col-md-9-->
             </div><!--form-group-->
         
             <div class="mt-4 form-group form-group-description">
-                {{ html()->label(@('Item Description'))->for('name')->class('col-md-3 control-label') }}
+                {{ html()->label(@('Item Description'))->for('description')->class('col-md-3 control-label') }}
                 <div class="col-md-9">
-                    {{ html()->text('description', $item->description)->class('form-control block mt-1 w-full')->required() }}
+                    {{ html()->text('description', $item->description)->id('description')->class('form-control block mt-1 w-full')->required() }}
                 </div><!--col-md-9-->
             </div><!--form-group-->
                 
             <div class="mt-4 form-group form-group-url">
-                {{ html()->label(@('URL'))->for('url')->class('col-md-3 control-label') }}
+                {{ html()->label(@('Link'))->for('url')->class('col-md-3 control-label') }}
                 <div class="col-md-9">
-                    {{ html()->text('url', $item->url)->class('form-control block mt-1 w-full') }}
+                    {{ html()->text('url', $item->url)->id('url')->class('form-control block mt-1 w-full') }}
                 </div><!--col-md-9-->
             </div><!--form-group-->
 
             <div class="mt-4 form-group form-group-file">
-                {{ html()->label(@('File Upload'))->for('file')->class('col-md-3 control-label') }}
+                {{ html()->label(@('File Upload'))->class('col-md-3 control-label') }}
                 <div class="col-md-9">
-                    {{ html()->file( 'file')->class('form-control block mt-1 w-full')}}
+                    <x-file-uploader 
+                        filepath="filepath" 
+                        original="original" 
+                        maxSize="100" 
+                        class="form-group-file hidden"
+                    />
                 </div><!--col-md-9-->
             </div><!--form-group-->
             
-            <div class="mt-4 form-group form-group-size">
-                {{ html()->label(@('Size(MB)'))->for('size')->class('col-md-3 control-label') }}
-                <div class="col-md-9">
-                    {{ html()->text('size', $item->size)->class('form-control block mt-1 w-full')->disabled() }}
+            <div class="mt-4 form-group form-group-size hidden flex">
+                {{ html()->label(@('Size'))->class('col-md-3 control-label') }}
+                <div class="col-md-9 ms-2">
+                    <span id="size">{{ round($item->size/1024, 2) }}</span> mb
                 </div><!--col-md-9-->
             </div><!--form-group-->
 
             <div class="mt-4 form-group">
                 {{ html()->label(@('Sort Order'))->for('sort')->class('col-md-3 control-label') }}
                 <div class="col-md-9">
-                    {{ html()->text('sort', $item->sort)->class('form-control block mt-1 w-full')->required() }}
+                    {{ html()->text('sort', $item->sort)->id('sort')->class('form-control block mt-1 w-full')->required() }}
                 </div><!--col-md-9-->
             </div><!--form-group-->
 

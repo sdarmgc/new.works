@@ -44,12 +44,6 @@
         });
         $("#message-edit").click(function() {
             if ($(this).text() == "Edit Message") {
-                // var contents = $("#message-board-body").html();
-                // $("#message-board-body").html("<form id='message-form' method='post' action=''><textarea name='editor' id='editor'></textarea> ");
-                // $("#editor").html(contents);
-                // CKEDITOR.config.allowedContent = true;
-                // CKEDITOR.replace( 'editor' );
-
                 originalMessageContents = $("#message-board-body").html();
                 var contents = (originalMessageContents ? originalMessageContents.trim() : "");
                 $("#message-board-body").html("<form id='message-form' method='post' action=''><div name='editor' id='editor'></div><div id='toolbar-container'></div> ");

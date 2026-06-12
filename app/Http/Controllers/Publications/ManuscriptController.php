@@ -6,12 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Storage;
+use Exception;
 use App\Models\Publications\Manuscript;
 use App\Models\Publications\ManuscriptItem;
 
 class ManuscriptController extends Controller
 {
 
+    public $pNameList = [ '' => 'Select a Publication',
+                        'SBL' => 'Sabbath Bible Lessons', // SBL
+                        'LBS' => 'Lecciones Biblicas Sabaticas', 
+                        'RH' => 'Reformation Herald, Week of Prayer', 
+                        'OTH' => 'Other'];
     /**
      * Instantiate a new UserController instance.
      *
@@ -73,22 +79,41 @@ class ManuscriptController extends Controller
             'sort' => ($last ? $last->id + 1 : 0)
         );
 
-        $title = "Add New Publication";
+        $title = "Add New Manuscript";
         $form_url = "publications.manuscripts.storeManuscript";
         $method = 'post';
+
+        $pNameList = $this->pNameList;
+        $pName = ' ';
+
+        $yearList = [];
+        $thisYear = date('Y');
+        for ($index = 0; $index < 10; $index++) {
+            $year = $thisYear + $index;
+            $yearList[$year] = $year;
+        }
+        $year = $thisYear;
+        $issue = 1;
 
         return view(
             'publications.manuscripts.edit_manuscript', [
                 "manuscript" => (object)$manuscript, 
                 "title" => $title, 
                 "form_url" => $form_url, 
-                'method' => $method
+                'method' => $method,
+                'pNameList' => $pNameList,
+                'yearList' => $yearList,
+                'pName' => $pName,
+                'year' => $year,
+                'issue' => $issue
             ]
         );
     }
     
     public function createItem($manuscript_id)
     {
+        $manuscriptName = Manuscript::where('id', $manuscript_id)->first()->name;
+    
         $last = ManuscriptItem::where('manuscript_id', $manuscript_id)->latest()->first();
         $item = array(
             'id' => "0",
@@ -101,13 +126,17 @@ class ManuscriptController extends Controller
             'sort' => ($last ? $last->id + 1 : 0)
         );
 
-        $title = "Add New Item";
+        $title = "Add Manuscript Item";
         $form_url = "publications.manuscripts.storeItem";
         $method = 'post';
 
         return view(
-            'publications.manuscripts.edit_item',
-            ["item" => (object)$item, "title" => $title, "form_url" => $form_url, 'method' => $method]
+            'publications.manuscripts.edit_item', [
+                'manuscriptName' => $manuscriptName,
+                "item" => (object)$item, 
+                "title" => $title, 
+                "form_url" => $form_url, 
+                'method' => $method]
         );
     }
 
@@ -180,10 +209,13 @@ class ManuscriptController extends Controller
             $item->url = $request->url;
             $item->size = 0;
         }
-        else if ($request->hasFile('file')) {
-            $item->url = $request->file('file')->getClientOriginalName();
-            $item->size = round($request->file('file')->getSize() / 1024 / 1024, 2) ;
-            $request->file('file')->move(storage_path() . '/app/public/publications/manuscripts/', $item->url);
+        else if (!empty($request->has('filepath'))) {
+            if (!Storage::disk('public')->exists($request->filepath))
+                throw new Exception('File upload error!');
+            $storagePath = 'publications/manuscripts/';
+            $item->url = $request->original;
+            $item->size = round(Storage::disk('public')->size($request->filepath) / 1024, 0) ;
+            Storage::disk('public')->move($request->filepath, $storagePath . $request->original);
         }
         $item->sort = $request->sort;
         $item->save();
@@ -212,12 +244,36 @@ class ManuscriptController extends Controller
         $form_url = "publications.manuscripts.storeManuscript";
         $method = 'put';
 
+        $pNameList = $this->pNameList;
+
+        $pName = '';
+        foreach ($pNameList as $key => $value) {
+            if (strpos($manuscript->name, $value) !== false) {
+                $pName = $key;
+                break;
+            }
+        }
+
+        $yearList = [];
+        $thisYear = date('Y');
+        for ($index = 0; $index < 10; $index++) {
+            $year = $thisYear + $index;
+            $yearList[$year] = $year;
+        }
+        $year = preg_match("/20\d\d/", $manuscript['name'], $match) ? $match[0] : $thisYear;
+        $issue = preg_match("/[\/\-](\d)/", $manuscript['name'], $match) ? $match[1] : 1;
+
         return view(
             'publications.manuscripts.edit_manuscript', [
                 "manuscript" => (object)$manuscript, 
                 "title" => $title, 
                 "form_url" => $form_url, 
-                'method' => $method
+                'method' => $method,
+                'pNameList' => $pNameList,
+                'yearList' => $yearList,
+                'pName' => $pName,
+                'year' => $year,
+                'issue' => $issue
             ]
         );
     }
@@ -225,6 +281,7 @@ class ManuscriptController extends Controller
     public function editItem($id)
     {
         $item = ManuscriptItem::find($id);
+        $manuscriptName = Manuscript::where('id', $item->manuscript_id)->first()->name;
 
         $title = "Edit Manuscript Item";
         $form_url = "publications.manuscripts.storeItem";
@@ -232,6 +289,7 @@ class ManuscriptController extends Controller
 
         return view(
             'publications.manuscripts.edit_item', [
+                'manuscriptName' => $manuscriptName,
                 "item" => (object)$item, 
                 "title" => $title, 
                 "form_url" => $form_url, 
@@ -279,7 +337,7 @@ class ManuscriptController extends Controller
         $name = $item->name;
 
         if ($item->type != 2) {
-            Storage::delete('/public/publications/manuscripts/' . $item->url);
+            Storage::disk('public')->delete('publications/manuscripts/' . $item->url);
         }
 
         $item->delete();

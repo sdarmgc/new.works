@@ -1,3 +1,9 @@
+
+    <div class="admin-menu justfy-end p-2 mb-2">
+        @hasanyrole('administrator|executive')
+        <a href="{{ route("publications.manuscripts.createManuscript") }}" class="admin-menu text-indigo-700 dark:text-indigo-300">{{ trans('Add Manuscript') }}</a>
+        @endhasanyrole
+    </div>
 @foreach ($manuscript as $pub)
     @if (!$pub->active && !(Auth::user()->hasRole('administrator')))
         @continue
@@ -69,7 +75,7 @@
                         </td>
                         <td class="item-size">
                             @if (is_numeric($item->size) && $item->size > 0)
-                                {{ $item->size }} MB
+                                {{ round($item->size / 1024, 2) }} MB
                             @else
                                 N/A
                             @endif
@@ -87,7 +93,9 @@
                     @hasanyrole('administrator|executive')
                     <tr class=>
                         <td class="admin-menu" colspan=1 style="text-align: left;">
+                            @if (count($pub->files) > 0)
                             <a href="{{ route("email.compose") }}" class="admin-menu text-indigo-700 dark:text-indigo-300">{{ trans('Send Email Notification') }}</a>
+                            @endif
                         </td>
                         <td class="admin-menu" colspan=3>
                             <a href="{{ route("publications.manuscripts.createItem", [$pub->id]) }}" class="admin-menu text-indigo-700 dark:text-indigo-300">{{ trans('Add') }}</a>
@@ -98,12 +106,6 @@
         </div>
     </div>
 @endforeach
-
-    <div class="admin-menu" style="text-align: right">
-        @hasanyrole('administrator|executive')
-        <a href="{{ route("publications.manuscripts.createManuscript") }}" class="admin-menu text-indigo-700 dark:text-indigo-300">{{ trans('Add Manuscript') }}</a>
-        @endhasanyrole
-    </div>
             
 @push("after-scripts")
     <script>

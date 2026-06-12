@@ -13,6 +13,7 @@ use App\Http\Controllers\Publications\Tools\ArticleConverterController;
 use App\Http\Controllers\Publications\Tools\Sbl\SblConverterController;
 use App\Http\Controllers\Publications\Tools\Bible\BibleConverterController;
 use App\Http\Controllers\Publications\Tools\Bible\XmlBibleConverterController;
+use App\Http\Controllers\FileUploadController;
 
 
 Route::get('/', function () {
@@ -107,6 +108,9 @@ Route::middleware([
         Route::get('publications/manage/rebuild-pub-db', [ManageController::class, 'rebuildPubDb'])->name('publications.manage.rebuild-pub-db');
         Route::get('publications/manage/rebuild-sb-db', [ManageController::class, 'rebuildSbDb'])->name('publications.manage.rebuild-sb-db');
 
+        // Handle async file upload for file-uploader.blade.php
+        Route::post('/upload-async-file', [FileUploadController::class, 'uploadAsync']);
+        Route::delete('/delete-async-file', [FileUploadController::class, 'deleteAsync']);
         // Authoring
         // Route::get('publications/composer/{book}/{lang}/{year}/{issue}', [ReaderController::class, 'composer'])->name('publications.reader.composer');
     });
