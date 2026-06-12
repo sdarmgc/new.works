@@ -17,6 +17,8 @@ use App\Http\Controllers\FileUploadController;
 
 
 Route::get('/', function () {
+    if (Auth::check())
+        return redirect('/publications/manuscripts');
     return view('welcome');
 });
 

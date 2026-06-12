@@ -15,7 +15,7 @@ new class extends Component
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ url('/') }}">
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
@@ -33,14 +33,32 @@ new class extends Component
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <!-- Teams Dropdown -->
+                
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('login') }}">
+                        {{ __('Log in') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('register') }}">
+                        {{ __('Register') }}
+                    </x-nav-link>
+                </div>
+                
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('contact') }}">
+                        {{ __('Contact') }}
+                    </x-nav-link>
+                </div>
 
                 <!-- Settings Dropdown -->
                 <div class="ms-3 relative">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <span class="inline-flex rounded-md">
-                                <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
+                                <button type="button" class="inline-flex items-center mt-0.5 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
                                     {{ __('Settings') }}
 
                                     <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -55,10 +73,6 @@ new class extends Component
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 <x-theme-switcher />
                             </div>
-
-                            <x-dropdown-link href="{{ route('contact') }}">
-                                {{ __('Contact') }}
-                            </x-dropdown-link>
 
                         </x-slot>
                     </x-dropdown>
@@ -83,6 +97,18 @@ new class extends Component
             <x-responsive-nav-link href="{{ route('publications.reader.index') }}" :active="request()->routeIs('publications.reader.index')">
                 {{ __('Reader') }}
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="{{ route('contact') }}" :active="request()->routeIs('contact')">
+                {{ __('Contact') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
+                {{ __('Log in') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                {{ __('Register') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -99,10 +125,6 @@ new class extends Component
                 <div class="block px-4 py-2 text-xs text-gray-400">
                     <x-theme-switcher />
                 </div>
-
-                <x-responsive-nav-link href="{{ route('contact') }}" :active="request()->routeIs('contact')">
-                    {{ __('Contact') }}
-                </x-responsive-nav-link>
 
             </div>
         </div>

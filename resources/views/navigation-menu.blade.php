@@ -11,6 +11,7 @@
                 </div>
 
                 <!-- Navigation Links -->
+                {{-- 
                 @auth
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
@@ -18,7 +19,7 @@
                     </x-nav-link>
                 </div>
                 @endauth
-
+                --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('publications.reader.index') }}">
                         {{ __('Reader') }}
@@ -177,6 +178,12 @@
                         </x-dropdown>
                     </div>
                 @endif
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('contact') }}">
+                        {{ __('Contact') }}
+                    </x-nav-link>
+                </div>
 
                 <!-- Settings Dropdown -->
                 <div class="ms-3 relative">
@@ -188,7 +195,7 @@
                                 </button>
                             @else
                                 <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
+                                    <button type="button" class="inline-flex items-center mt-0.5 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
                                         {{ Auth::check() ? Auth::user()->name : 'Settings' }}
 
                                         <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -216,10 +223,6 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
                             @endauth
-
-                            <x-dropdown-link href="{{ route('contact') }}">
-                                {{ __('Contact') }}
-                            </x-dropdown-link>
 
                             @hasanyrole('super-admin|administrator|executive')
                                 <x-dropdown-link href="{{ url('/email/compose') }}">
@@ -291,6 +294,12 @@
         </div>
         @endhasanyrole
 
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('contact') }}" :active="request()->routeIs('contact')">
+                {{ __('Contact') }}
+            </x-responsive-nav-link>
+        </div>
+
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="flex items-center px-4">
@@ -319,10 +328,6 @@
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
                 @endauth
-
-                <x-responsive-nav-link href="{{ route('contact') }}" :active="request()->routeIs('contact')">
-                    {{ __('Contact') }}
-                </x-responsive-nav-link>
 
                 @hasanyrole('super-admin|administrator|executive')
                 <x-responsive-nav-link href="{{ route('email.compose') }}" :active="request()->routeIs('email.compose')">
